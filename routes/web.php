@@ -39,6 +39,9 @@ Route::controller(ProductController::class)->group(function() {
 });
 
 //Ajax
-Route::post('update-cert-image', [BannerController::class, 'UpdateBanner'])->name('UpdateBanner');
-
+//Banner
+Route::post('update-banner-details', [BannerController::class, 'UpdateBanner'])->name('UpdateBanner');
 Route::get('get-active-banner', [BannerController::class, 'GetActiveBanner'])->name('GetActiveBanner'); 
+
+//Product
+Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetProductDetails'])->name('GetProductDetails'); 

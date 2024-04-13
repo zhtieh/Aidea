@@ -166,39 +166,39 @@
                   <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                       <table class="table table-bordered">
-											  <tbody>
-											  	<form class="bannerForm">
-											  		<input type="hidden" name="BannerName" value="Banner4">
-											  		<input type="hidden" name="BannerGUID" value="{{ $banners[3]->BannerGUID }}">
-												    <tr>
-											    			<th scope="col">Title</th>
-											    			<td>
-											    				<textarea id="bTitle4" name="BannerTitle" rows="2" cols="50">{{ $banners[3]->Title }}</textarea>
-											    			</td>
-												    </tr>
-												    <tr>
-												    		<th scope="col">Description</th>
-												    		<td>
-											    				<textarea id="bDesc4" name="BannerDesc" rows="2" cols="50">{{ $banners[3]->Description }}</textarea>
-											    			</td>
-												    </tr>
-												    <tr>
-												    		<th scope="col">Banner</th>
-												    		<td><img src="{{ $banners[3]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner4Img">
-												      		<input class="form-control" type="file" id="UploadBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner4Img');" name="UploadBannerImage" data-id="Banner4Img"></td>
-												    </tr>
-												    <tr>
-												    		<th scope="col">Mobile Banner</th>
-												    		<td><img src="{{ $banners[3]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner4Img">
-												      		<input class="form-control" type="file" id="UploadMobileBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner4Img');" name="UploadMobileBannerImage" data-id="MobileBanner4Img"></td>
-												    </tr>
-												    <tr>
-												    	<td></td>
-												    	<td><input type="submit" class="btn btn-success w-100" value="Update"></td>
-												    </tr>
-											    </form>
-											  </tbody>
-											</table>
+							<tbody>
+							<form class="bannerForm">
+								<input type="hidden" name="BannerName" value="Banner4">
+								<input type="hidden" name="BannerGUID" value="{{ $banners[3]->BannerGUID }}">
+								<tr>
+										<th scope="col">Title</th>
+										<td>
+											<textarea id="bTitle4" name="BannerTitle" rows="2" cols="50">{{ $banners[3]->Title }}</textarea>
+										</td>
+								</tr>
+								<tr>
+										<th scope="col">Description</th>
+										<td>
+											<textarea id="bDesc4" name="BannerDesc" rows="2" cols="50">{{ $banners[3]->Description }}</textarea>
+										</td>
+								</tr>
+								<tr>
+										<th scope="col">Banner</th>
+										<td><img src="{{ $banners[3]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner4Img">
+										<input class="form-control" type="file" id="UploadBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner4Img');" name="UploadBannerImage" data-id="Banner4Img"></td>
+								</tr>
+								<tr>
+										<th scope="col">Mobile Banner</th>
+										<td><img src="{{ $banners[3]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner4Img">
+										<input class="form-control" type="file" id="UploadMobileBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner4Img');" name="UploadMobileBannerImage" data-id="MobileBanner4Img"></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="submit" class="btn btn-success w-100" value="Update"></td>
+								</tr>
+							</form>
+							</tbody>
+						</table>
                     </div>
                   </div>
                 </div>

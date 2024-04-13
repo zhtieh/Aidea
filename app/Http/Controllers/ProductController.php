@@ -33,4 +33,21 @@ class ProductController extends Controller
 
     	return view('bo.products')->with('products',$products);
     }
+
+	public function GetProductDetails($productGUID)
+	{
+		try
+        {
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.CoverPhotoURL,
+											p.Photo1URL, p.Photo2URL, p.Photo3URL, p.Photo4URL, p.FileURL
+                                FROM u859417454_Aidea.Product p
+                                LIMIT 1;");
+
+            return json_encode(['status' => 1, 'product' => $products[0]]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+        }
+	}
 }
