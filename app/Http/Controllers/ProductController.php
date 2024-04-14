@@ -34,14 +34,33 @@ class ProductController extends Controller
     	return view('bo.products')->with('products',$products);
     }
 
+    public function GetActiveProduct()
+    {
+        try
+        {
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+                                            IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
+                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                FROM u859417454_Aidea.Product p;");
+
+            return json_encode(['status' => 1, 'products' => $products]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+        }
+    }
+
 	public function GetProductDetails($productGUID)
 	{
 		try
         {
-            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.CoverPhotoURL,
-											p.Photo1URL, p.Photo2URL, p.Photo3URL, p.Photo4URL, p.FileURL
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+											IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
+                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p
-                                LIMIT 1;");
+                                WHERE p.ProductGUID = ?
+                                LIMIT 1;",[$productGUID]);
 
             return json_encode(['status' => 1, 'product' => $products[0]]);
         }
@@ -50,4 +69,288 @@ class ProductController extends Controller
             Log::debug($e);
         }
 	}
+
+    public function AddNewProduct(Request $request)
+    {
+        try
+        {
+            Log::debug($request);
+
+            $CoverPhotoURL = "";
+            $ProductPhoto1URL = "";
+            $ProductPhoto2URL = "";
+            $ProductPhoto3URL = "";
+            $ProductPhoto4URL = "";
+            $FileURL = "";
+            $count = 0;
+
+            if($request->hasFile('UploadCoverImage'))
+            {
+                $file = $request->file('UploadCoverImage');
+                $fileName = $request['ProductGUID'] ."_Cover.jpg";
+                $CoverPhotoURL = "https://images.vanguardbuffle.com/Aidea/Product/Cover/".$fileName;
+
+                Storage::disk('hostinger')->put('Product/Cover/'.$fileName, fopen($request->file('UploadCoverImage'), 'r+'));
+            }
+
+            if($request->hasFile('UploadProductPhotoImage'))
+            {
+                $reverse = array_reverse($request->file('UploadProductPhotoImage'));
+                foreach ($reverse as $image) {
+                   $imageName = $request['ProductGUID'] ."_Photo".($count + 1).".jpg";
+                   if($count == 0)
+                   {
+                        $ProductPhoto1URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                   }
+                   else if($count == 1)
+                   {
+                        $ProductPhoto2URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                   }
+                   else if($count == 2)
+                   {
+                        $ProductPhoto3URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                   }
+                   else
+                   {
+                        $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
+                   }
+
+                   $count++;
+
+                   Storage::disk('hostinger')->put('Product/'.$imageName, fopen($image, 'r+'));
+                }
+            }
+
+            if($request->hasFile('ProductFile'))
+            {
+                $file = $request->file('ProductFile');
+                $name = $file->getClientOriginalName();
+                $extension = explode('.', $name);
+                $fileName = $request['ProductGUID'] ."_File.".end($extension);
+                $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+
+                Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+            }
+
+            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$FileURL]);
+
+            return json_encode(['status' => 1]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+
+            return json_encode(['status' => 0]);
+        }
+    }
+
+    public function EditProduct(Request $request)
+    {
+        try
+        {
+            Log::debug($request);
+
+            $product = DB::select("SELECT IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL, IFNULL(p.Photo1URL,'') AS Photo1URL , IFNULL(p.Photo2URL,'') AS Photo2URL, 
+                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                FROM u859417454_Aidea.Product p
+                                WHERE p.ProductGUID = ? LIMIT 1;", [$request['ProductGUID']]);
+
+            $CoverPhotoURL = $product[0]->CoverPhotoURL;
+            $ProductPhoto1URL = $product[0]->Photo1URL;
+            $ProductPhoto2URL = $product[0]->Photo2URL;
+            $ProductPhoto3URL = $product[0]->Photo3URL;
+            $ProductPhoto4URL = $product[0]->Photo4URL;
+            $FileURL = $product[0]->FileURL;
+            $count = 0;
+
+            if($request['CoverAction'] == "Yes")
+            {
+                DB::insert("UPDATE u859417454_Aidea.Product SET CoverPhotoURL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
+                $CoverPhotoURL = "";
+
+                if($request->hasFile('UploadCoverImage'))
+                {
+                    $file = $request->file('UploadCoverImage');
+                    $fileName = $request['ProductGUID'] ."_Cover.jpg";
+                    $CoverPhotoURL = "https://images.vanguardbuffle.com/Aidea/Product/Cover/".$fileName;
+
+                    Storage::disk('hostinger')->put('Product/Cover/'.$fileName, fopen($request->file('UploadCoverImage'), 'r+'));
+                }
+                else
+                {
+                    Storage::disk('hostinger')->delete('Product/Cover/'.$request['ProductGUID'] ."_Cover.jpg");
+                }
+            }
+
+            if($request['PhotoAction'] == "Yes")
+            {
+                DB::insert("UPDATE u859417454_Aidea.Product SET Photo1URL = '',Photo2URL = '',Photo3URL = '',Photo4URL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
+
+                $ProductPhoto1URL = "";
+                $ProductPhoto2URL = "";
+                $ProductPhoto3URL = "";
+                $ProductPhoto4URL = "";
+
+                if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo1.jpg"))
+                {
+                   Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo1.jpg");
+                }
+
+                if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo2.jpg"))
+                {
+                     Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo2.jpg");
+                }
+
+                if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo3.jpg"))
+                {
+                    Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo3.jpg");
+                }
+
+                if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo4.jpg"))
+                {
+                    Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo4.jpg");
+                }
+
+                if($request->hasFile('UploadProductPhotoImage'))
+                {
+                    $reverse = array_reverse($request->file('UploadProductPhotoImage'));
+                    foreach ($reverse as $image) {
+                       $imageName = $request['ProductGUID'] ."_Photo".($count + 1).".jpg";
+                       if($count == 0)
+                       {
+                            $ProductPhoto1URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                       }
+                       else if($count == 1)
+                       {
+                            $ProductPhoto2URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                       }
+                       else if($count == 2)
+                       {
+                            $ProductPhoto3URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                       }
+                       else
+                       {
+                            $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
+                       }
+
+                       $count++;
+
+                       Storage::disk('hostinger')->put('Product/'.$imageName, fopen($image, 'r+'));
+                    }
+                }
+            }
+
+            if($request['FileAction'] == "Yes")
+            {
+                DB::insert("UPDATE u859417454_Aidea.Product SET FileURL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
+
+                $FileNameArray = explode("/",$FileURL);
+                $FileName = end($FileNameArray);
+
+                if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
+                {
+                    Storage::disk('hostinger')->delete('Product/File/'.$FileName);
+                }
+
+                $FileURL = '';
+
+                if($request->hasFile('ProductFile'))
+                {
+                    $file = $request->file('ProductFile');
+                    $name = $file->getClientOriginalName();
+                    $extension = explode('.', $name);
+                    $fileName = $request['ProductGUID'] ."_File.".end($extension);
+                    $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+
+                    Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+                }
+            }
+
+            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,FileURL = ?
+                WHERE ProductGUID = ?;", [$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$FileURL,$request['ProductGUID']]);
+
+            return json_encode(['status' => 1]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+
+            return json_encode(['status' => 0]);
+        }
+    }
+
+    public function DeleteProduct(Request $request)
+    {
+        try
+        {
+            $pGUID = $request["ProductGUID"];
+
+            $product = DB::select("SELECT IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL, IFNULL(p.Photo1URL,'') AS Photo1URL , IFNULL(p.Photo2URL,'') AS Photo2URL, 
+                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                FROM u859417454_Aidea.Product p
+                                WHERE p.ProductGUID = ? LIMIT 1;", [$pGUID]);
+
+            $product[0]->CoverFileName = explode("/",$product[0]->CoverPhotoURL);
+            $product[0]->Photo1FileName = explode("/",$product[0]->Photo1URL);
+            $product[0]->Photo2FileName = explode("/",$product[0]->Photo2URL);
+            $product[0]->Photo3FileName = explode("/",$product[0]->Photo3URL);
+            $product[0]->Photo4FileName = explode("/",$product[0]->Photo4URL);
+            $product[0]->FileName = explode("/",$product[0]->FileURL);
+
+            $CoverFileName = end($product[0]->CoverFileName);
+            $Photo1FileName = end($product[0]->Photo1FileName);
+            $Photo2FileName = end($product[0]->Photo2FileName);
+            $Photo3FileName = end($product[0]->Photo3FileName);
+            $Photo4FileName = end($product[0]->Photo4FileName);
+            $FileName = end($product[0]->FileName);
+
+            if($CoverFileName != "" && Storage::disk('hostinger')->exists('Product/Cover/'.$CoverFileName))
+            {
+                Storage::disk('hostinger')->delete('Product/Cover/'.$CoverFileName);
+            }
+
+            Log::debug($Photo1FileName);
+            Log::debug(Storage::disk('hostinger')->exists('Product/'.$Photo1FileName) ? "true" : "false");
+
+            if($Photo1FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo1FileName))
+            {
+                Log::debug($Photo1FileName);
+                Storage::disk('hostinger')->delete('Product/'.$Photo1FileName);
+            }
+
+            if($Photo2FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo2FileName))
+            {
+                Storage::disk('hostinger')->delete('Product/'.$Photo2FileName);
+            }
+
+            if($Photo3FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo3FileName))
+            {
+                Storage::disk('hostinger')->delete('Product/'.$Photo3FileName);
+            }
+
+            if($Photo4FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo4FileName))
+            {
+                Storage::disk('hostinger')->delete('Product/'.$Photo4FileName);
+            }
+
+            if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
+            {
+                Log::debug($FileName);
+                Storage::disk('hostinger')->delete('Product/File/'.$FileName);
+            }
+
+            DB::delete("DELETE FROM u859417454_Aidea.Product WHERE ProductGUID = ?;", [$pGUID]);
+
+            return json_encode(['status' => 1]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+
+            return json_encode(['status' => 0]);
+        }
+        
+    }
 }

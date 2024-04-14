@@ -45,3 +45,8 @@ Route::get('get-active-banner', [BannerController::class, 'GetActiveBanner'])->n
 
 //Product
 Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetProductDetails'])->name('GetProductDetails'); 
+Route::post('add-product', [ProductController::class, 'EditProduct'])->name('EditProduct');
+Route::post('edit-product', [ProductController::class, 'AddNewProduct'])->name('AddNewProduct');
+Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name('DeleteProduct');
+
+Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
