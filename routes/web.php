@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Account\LoginRegisterController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\HomeController;
 
 
 /*
@@ -18,10 +17,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('index');
-// });
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::get('/admin/register', 'register')->name('register');
@@ -43,7 +41,7 @@ Route::controller(ProductController::class)->group(function() {
 //Ajax
 //Banner
 Route::post('update-banner-details', [BannerController::class, 'UpdateBanner'])->name('UpdateBanner');
-Route::get('get-active-banner', [BannerController::class, 'GetActiveBanner'])->name('GetActiveBanner'); //*
+Route::get('get-active-banner', [BannerController::class, 'GetActiveBanner'])->name('GetActiveBanner'); 
 
 //Product
 Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetProductDetails'])->name('GetProductDetails'); 
@@ -51,4 +49,4 @@ Route::post('add-product', [ProductController::class, 'EditProduct'])->name('Edi
 Route::post('edit-product', [ProductController::class, 'AddNewProduct'])->name('AddNewProduct');
 Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name('DeleteProduct');
 
-Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); //*
+Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
