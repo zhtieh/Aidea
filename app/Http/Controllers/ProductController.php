@@ -26,7 +26,7 @@ class ProductController extends Controller
 		$this->middleware('auth');
 	}
 
-	public function home()
+	public function index()
     {
     	$products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.CoverPhotoURL 
 								FROM u859417454_Aidea.Product p;");
