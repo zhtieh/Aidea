@@ -36,7 +36,7 @@
                         Price(RM)
                     </th>
                     <th>
-                        Sold
+                        Hot Sales
                     </th>
                     <th>
                         Actions
@@ -59,7 +59,19 @@
                                 {{ $product->Price }}
                             </td>
                             <td>
-                                {{ $product->Sold }}
+                              <div class="form-check form-switch">
+                                  @if($product->HotSales == 0)
+                                      <label class="switch">
+                                        <input type="checkbox" class=".HotSalesCB" onclick="SetHotSales(this,'{{ $product->ProductGUID }}')">
+                                        <span class="slider round"></span>
+                                      </label>
+                                  @else
+                                      <label class="switch">
+                                        <input type="checkbox" checked class=".HotSalesCB" onclick="SetHotSales(this, '{{ $product->ProductGUID }}')">
+                                        <span class="slider round"></span>
+                                      </label>
+                                  @endif
+                                </div>
                             </td>
                             <td align="center">
                                 <a href="#" class="btn btn-light actionEdit" data-guid="" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="GetProductDetails('{{ $product->ProductGUID }}')"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -202,6 +214,8 @@
       	console.log($(this).attr('data-guid'));
       	     $("#confirmDeleteBtn").attr('data-guid',$(this).attr('data-guid'));
 	    });
+
+
       });
 
       function readProductURL(input,target) {
@@ -299,6 +313,14 @@
             previewContainer.appendChild(img);
       	}
 
+        if(details.Photo5URL != '')
+        {
+          var img = document.createElement('img');
+            img.src = details.Photo5URL;
+            img.classList.add('preview-image');
+            previewContainer.appendChild(img);
+        }
+
       	if(details.FileURL != '')
       	{
       		$('#ProductFileLink').attr('href', details.FileURL);
@@ -385,6 +407,8 @@
       	$('#ProductFileLink').css('display','none');
       });
 
+
+
        function uuidv4() { 
 	    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 	    .replace(/[xy]/g, function (c) { 
@@ -393,5 +417,28 @@
 	        return v.toString(16); 
 	    }); 
 	  }
+
+    function SetHotSales(e,pGUID) {
+      var hSales = (e.checked == true) ? 1 : 0;
+      console.log(hSales);
+      var formData = new FormData();
+      formData.append('ProductGUID',pGUID);
+      formData.append('HotSales',hSales);
+
+      $.ajax({
+          url:"{{ route('SetHotSales') }}",
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(response){
+            alert("Hot Sales has been set successfully.");
+            window.location.href = "{{ route('products') }}";
+          }
+        })
+    }
   </script>
 @endsection

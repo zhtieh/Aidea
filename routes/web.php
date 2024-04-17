@@ -22,7 +22,6 @@ Route::get('/', function () {
 });
 
 Route::controller(LoginRegisterController::class)->group(function() {
-    Route::get('/admin/register', 'register')->name('register');
     Route::post('/admin/store', 'store')->name('store');
     Route::get('/admin/login', 'login')->name('login');
     Route::post('/admin/authenticate', 'authenticate')->name('authenticate');
@@ -48,5 +47,6 @@ Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetPro
 Route::post('add-product', [ProductController::class, 'EditProduct'])->name('EditProduct');
 Route::post('edit-product', [ProductController::class, 'AddNewProduct'])->name('AddNewProduct');
 Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name('DeleteProduct');
+Route::post('set-hotsales', [ProductController::class, 'SetHotSales'])->name('SetHotSales');
 
 Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 

@@ -28,7 +28,7 @@ class ProductController extends Controller
 
 	public function index()
     {
-    	$products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.CoverPhotoURL 
+    	$products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.HotSales, p.CoverPhotoURL 
 								FROM u859417454_Aidea.Product p;");
 
     	return view('bo.products')->with('products',$products);
@@ -40,7 +40,7 @@ class ProductController extends Controller
         {
             $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
                                             IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
-                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p;");
 
             return json_encode(['status' => 1, 'products' => $products]);
@@ -57,7 +57,7 @@ class ProductController extends Controller
         {
             $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
 											IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
-                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ?
                                 LIMIT 1;",[$productGUID]);
@@ -81,6 +81,7 @@ class ProductController extends Controller
             $ProductPhoto2URL = "";
             $ProductPhoto3URL = "";
             $ProductPhoto4URL = "";
+            $ProductPhoto5URL = "";
             $FileURL = "";
             $count = 0;
 
@@ -110,9 +111,13 @@ class ProductController extends Controller
                    {
                         $ProductPhoto3URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
                    }
+                   else if($count == 3)
+                   {
+                        $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                   }
                    else
                    {
-                        $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
+                        $ProductPhoto5URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
                    }
 
                    $count++;
@@ -132,8 +137,8 @@ class ProductController extends Controller
                 Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
             }
 
-            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
-                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$FileURL]);
+            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,Photo5URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL]);
 
             return json_encode(['status' => 1]);
         }
@@ -152,7 +157,7 @@ class ProductController extends Controller
             Log::debug($request);
 
             $product = DB::select("SELECT IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL, IFNULL(p.Photo1URL,'') AS Photo1URL , IFNULL(p.Photo2URL,'') AS Photo2URL, 
-                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.Photo5URL,'') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ? LIMIT 1;", [$request['ProductGUID']]);
 
@@ -161,6 +166,7 @@ class ProductController extends Controller
             $ProductPhoto2URL = $product[0]->Photo2URL;
             $ProductPhoto3URL = $product[0]->Photo3URL;
             $ProductPhoto4URL = $product[0]->Photo4URL;
+            $ProductPhoto5URL = $product[0]->Photo5URL;
             $FileURL = $product[0]->FileURL;
             $count = 0;
 
@@ -185,12 +191,13 @@ class ProductController extends Controller
 
             if($request['PhotoAction'] == "Yes")
             {
-                DB::insert("UPDATE u859417454_Aidea.Product SET Photo1URL = '',Photo2URL = '',Photo3URL = '',Photo4URL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
+                DB::insert("UPDATE u859417454_Aidea.Product SET Photo1URL = '',Photo2URL = '',Photo3URL = '',Photo4URL = '',Photo5URL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
 
                 $ProductPhoto1URL = "";
                 $ProductPhoto2URL = "";
                 $ProductPhoto3URL = "";
                 $ProductPhoto4URL = "";
+                $ProductPhoto5URL = "";
 
                 if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo1.jpg"))
                 {
@@ -212,6 +219,11 @@ class ProductController extends Controller
                     Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo4.jpg");
                 }
 
+                if(Storage::disk('hostinger')->exists('Product/'.$request['ProductGUID'] ."_Photo5.jpg"))
+                {
+                    Storage::disk('hostinger')->delete('Product/'.$request['ProductGUID'] ."_Photo5.jpg");
+                }
+
                 if($request->hasFile('UploadProductPhotoImage'))
                 {
                     $reverse = array_reverse($request->file('UploadProductPhotoImage'));
@@ -229,9 +241,13 @@ class ProductController extends Controller
                        {
                             $ProductPhoto3URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
                        }
+                       else if($count == 3)
+                       {
+                            $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;
+                       }
                        else
                        {
-                            $ProductPhoto4URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
+                            $ProductPhoto5URL = "https://images.vanguardbuffle.com/Aidea/Product/".$imageName;;
                        }
 
                        $count++;
@@ -267,9 +283,9 @@ class ProductController extends Controller
                 }
             }
 
-            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,FileURL = ?
+            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,Photo5URL = ?,FileURL = ?
                 WHERE ProductGUID = ?;", [$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
-                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$FileURL,$request['ProductGUID']]);
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL,$request['ProductGUID']]);
 
             return json_encode(['status' => 1]);
         }
@@ -288,7 +304,7 @@ class ProductController extends Controller
             $pGUID = $request["ProductGUID"];
 
             $product = DB::select("SELECT IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL, IFNULL(p.Photo1URL,'') AS Photo1URL , IFNULL(p.Photo2URL,'') AS Photo2URL, 
-                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.Photo5URL,'') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ? LIMIT 1;", [$pGUID]);
 
@@ -297,6 +313,7 @@ class ProductController extends Controller
             $product[0]->Photo2FileName = explode("/",$product[0]->Photo2URL);
             $product[0]->Photo3FileName = explode("/",$product[0]->Photo3URL);
             $product[0]->Photo4FileName = explode("/",$product[0]->Photo4URL);
+            $product[0]->Photo5FileName = explode("/",$product[0]->Photo5URL);
             $product[0]->FileName = explode("/",$product[0]->FileURL);
 
             $CoverFileName = end($product[0]->CoverFileName);
@@ -304,6 +321,7 @@ class ProductController extends Controller
             $Photo2FileName = end($product[0]->Photo2FileName);
             $Photo3FileName = end($product[0]->Photo3FileName);
             $Photo4FileName = end($product[0]->Photo4FileName);
+            $Photo5FileName = end($product[0]->Photo5FileName);
             $FileName = end($product[0]->FileName);
 
             if($CoverFileName != "" && Storage::disk('hostinger')->exists('Product/Cover/'.$CoverFileName))
@@ -334,6 +352,10 @@ class ProductController extends Controller
             {
                 Storage::disk('hostinger')->delete('Product/'.$Photo4FileName);
             }
+            if($Photo5FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo5FileName))
+            {
+                Storage::disk('hostinger')->delete('Product/'.$Photo5FileName);
+            }
 
             if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
             {
@@ -352,5 +374,26 @@ class ProductController extends Controller
             return json_encode(['status' => 0]);
         }
         
+    }
+
+    public function SetHotSales(Request $request)
+    {
+        try
+        {
+            if($request['HotSales'] == 1)
+            {
+                DB::insert("UPDATE u859417454_Aidea.Product SET HotSales = 0");
+            }
+
+            DB::insert("UPDATE u859417454_Aidea.Product SET HotSales = ? WHERE ProductGUID = ?", [$request['HotSales'],$request['ProductGUID']]);
+
+            return json_encode(['status' => 1]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+
+            return json_encode(['status' => 0]);
+        }
     }
 }
