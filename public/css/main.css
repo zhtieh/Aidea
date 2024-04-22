@@ -1,0 +1,260 @@
+/* --------- General --------- */
+html,
+body
+{
+    height: 100%;
+    overflow-x: hidden;
+    background: #d0d0d0;
+    scroll-behavior: smooth;
+}
+
+@font-face
+{
+  font-family: 'Questrial';
+  src: url('../font/Questrial-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.container-custom
+{
+    padding:0 15px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media(min-width: 768px)
+{
+    .container
+    {
+        max-width: 810px;
+    }
+}
+
+@media(min-width: 992px)
+{
+    .container
+    {
+        max-width: 960px;
+    }
+}
+
+@media(min-width: 1200px)
+{
+    .container
+    {
+        max-width: 1320px;
+    }
+
+    .container-custom
+    {
+        max-width: 1720px;
+    }
+}
+
+@media(max-width:1200px) {
+    :root {
+        font-size: 14px;
+    }
+}
+
+@media(max-width:992px) {
+    :root {
+        font-size: 12px;
+    }
+}
+
+@media(max-width:769px) {
+    :root {
+        font-size: 10px;
+    }
+}
+
+section
+{
+    padding: 60px 0;
+}
+
+#banner
+{
+    padding: 0;
+    position: relative;
+}
+
+#product, #service
+{
+    background-color: #93a092;
+}
+
+#find-us
+{
+    padding: 0;
+}
+
+#about, #review
+{
+    background-color: #e2e4d0;
+}
+
+.navbar
+{
+    position: fixed;
+    width: 100%;
+    /* background-color: transparent !important; */
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.nav-container
+{
+    padding-left: 5px;
+}
+
+.nav-logo
+{
+    width: 150px;
+    height: auto;
+}
+
+.navbar-brand
+{
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 2em;
+    color: #262626;
+}
+
+.nav-item
+{
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link:hover,
+.navbar-light .navbar-nav .nav-item.active .nav-link
+{
+    background: #93a092;
+    color: #ffe9b7;
+    transition: .5s;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link
+{
+    color: #bfa569;
+    padding: 5px 15px;
+}
+
+.navbar-light .navbar-toggler
+{
+    border: none;
+    color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 0;
+    outline: none;
+}
+
+@media(max-width: 767.9px)
+{
+    .navbar
+    {
+        padding: 1.5rem 1rem;
+    }
+
+    .nav-container
+    {
+        padding-left: 15px;
+    }
+
+    .navbar-light .navbar-nav .nav-item .nav-link
+    {
+        padding: 20px 15px;
+    }
+}
+
+/* Footer */
+.footer
+{
+    padding: 3rem 7%;
+    background-color: #a0b89e;
+    /* background-image: url("../images/aidea-footer-bg.png");
+    background-size:cover;
+    background-repeat: no-repeat; */
+}
+
+.footer-logo
+{
+    margin-bottom: 1rem;
+}
+
+.footer-logo-img
+{
+    width: 250px;
+}
+
+.footer-title
+{
+    color: #fff;
+    font-size: 1.65rem;
+    font-family: 'Inter';
+    margin-bottom: 1rem;
+}
+
+.footer-content1
+{
+    color: #fff;
+    font-family: 'Inter';
+    font-size: 0.98rem;
+}
+
+.map-container
+{
+    display: flex;
+}
+
+.shop-contact
+{
+    color: #fff;
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social-icon
+{
+    font-size: 1.6rem;
+    font-family: 'Inter';
+    color: white;
+}
+
+.footer-icon
+{
+    font-size: 1.5rem;
+}
+
+.fa-phone
+{
+    font-size: 1.4rem;
+}
+
+.footer-license
+{
+    background-color: #93a092;
+    color: #ffe9b7;
+    text-align: center;
+    padding: 1% 0;
+}
+
+@media(max-width: 992px)
+{
+    .footer-logo-img
+    {
+        width: 180px;
+    }
+}
+
+@media(max-width: 767.9px)
+{
+    .navbar{
+        background-color: #fff !important;
+    }
+}

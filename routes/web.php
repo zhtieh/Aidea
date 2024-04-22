@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Account\LoginRegisterController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -17,9 +18,9 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'home']);
+
+Route::get('/payment',[HomeController::class, 'payment']);
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/admin/store', 'store')->name('store');
