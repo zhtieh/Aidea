@@ -895,7 +895,7 @@ AIDEA Home
 <section id="product">
     <div class="container-custom">
         <div class="product-carousel owl-carousel owl-theme">
-            <div class="item">
+            <!-- <div class="item">
                <div class="product-frame">
                     <div class="product-image">
                         <div class="overlay project-content-box">
@@ -917,9 +917,36 @@ AIDEA Home
                         </div>
                     </div>
                </div> 
-            </div>
+            </div> -->
+            @if(isset($products))
+                @foreach($products as $index => $product)
+                <div class="item">
+                    <div class="product-frame">
+                        <div class="product-image">
+                            <div class="overlay project-content-box">
+                                <div class="content-container">
+                                    <div class="d-flex" style="justify-content:center;">
+                                        <div class="more-img-btn" onclick="openModal({{ $index + 1 }});"><i
+                                                class="fa fa-ellipsis-h fa-icon"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="{{ $product->CoverPhotoURL }}" alt="Product {{ $index + 1 }}">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">{{ $product->Name }}</div>
+                            <div class="product-price">{{ $product->Price }}</div>
+                            <div class="d-flex">
+                                <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product{{ $index + 1 }}">Read More <i class="fa fa-info-circle"></i></button>
+                                <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $product->ProductGUID }}">Click to buy <i class="fa fa-shopping-cart"></i></a></button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                @endforeach
+            @endif
             
-            <div class="item">
+            <!-- <div class="item">
                 <div class="product-frame">
                     <div class="product-image">
                         <div class="overlay project-content-box">
@@ -988,16 +1015,15 @@ AIDEA Home
                </div> 
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="container-custom hot-sales">
+    <!-- <div class="container-custom hot-sales">
         <div class="row">
             <div class="col-md-4 promo-content-center">
                 <div class="promo-content-container">
                     <h1 class="promo-word">HOT</h1>
                     <br>
                     <h1 class="promo-word-2"><span class="space-pro"></span>SALES</h1>
-                    <!-- <img src="images/project/onsales.gif" alt="On Sales"> -->
                 </div>
             </div>
             <div class="col-md-4" style="padding: 10px;">
@@ -1035,10 +1061,52 @@ AIDEA Home
                 </ul>
             </div>
         </div> 
-    </div>
+    </div> -->
 </section>
 
-<div class="modal fade" id="product1" tabindex="-1" aria-labelledby="product1" aria-hidden="true">
+@if(isset($products))
+    @foreach($products as $index => $product)
+    <div id="lightbox-modal{{ $index + 1 }}" class="modalImg">
+        <span class="close cursor" onclick="closeModal({{ $index + 1 }})">&times;</span>
+        <div class="modal-img-content">
+            <div class="modalFrame">
+                <img src="{{ $product->Photo1URL }}" class="lightbox-img" alt="Image 1">
+            </div>
+            <div class="modalFrame">
+                <img src="{{ $product->Photo2URL }}" class="lightbox-img" alt="Image 2">
+            </div>
+            <div class="modalFrame">
+                <img src="{{ $product->Photo3URL }}" class="lightbox-img" alt="Image 3">
+            </div>
+            <div class="modalFrame">
+                <img src="{{ $product->Photo4URL }}" class="lightbox-img" alt="Image 4">
+            </div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1, {{ $index + 1 }})">&#10094;</a>
+        <a class="next" onclick="plusSlides(1, {{ $index + 1 }})">&#10095;</a>
+    </div>
+
+    <div class="modal fade" id="product{{ $index + 1 }}" tabindex="-1" aria-labelledby="product{{ $index + 1 }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="product{{ $index + 1 }}">{{ $product->Name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <p>{{ $product->Description }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+@endif
+<!-- <div class="modal fade" id="product1" tabindex="-1" aria-labelledby="product1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1055,28 +1123,9 @@ AIDEA Home
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade" id="product2" tabindex="-1" aria-labelledby="product2" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="product2">Modal title2</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="lightbox-modal1" class="modalImg">
+<!-- <div id="lightbox-modal1" class="modalImg">
     <span class="close cursor" onclick="closeModal(1)">&times;</span>
     <div class="modal-img-content">
         <div class="modalFrame">
@@ -1094,9 +1143,9 @@ AIDEA Home
     </div>
     <a class="prev" onclick="plusSlides(-1, 1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1, 1)">&#10095;</a>
-</div>
+</div> -->
 
-<div id="lightbox-modal2" class="modalImg">
+<!-- <div id="lightbox-modal2" class="modalImg">
     <span class="close cursor" onclick="closeModal(2)">&times;</span>
     <div class="modal-img-content">
         <div class="modalFrame">
@@ -1129,7 +1178,7 @@ AIDEA Home
     </div>
     <a class="prev" onclick="plusSlides(-1, 2)">&#10094;</a>
     <a class="next" onclick="plusSlides(1, 2)">&#10095;</a>
-</div>
+</div> -->
 
 <section id="about">
     <div class="container">

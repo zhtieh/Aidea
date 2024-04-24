@@ -21,7 +21,6 @@ class HomeController extends Controller
                                     IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
                                     IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p;");
-            Log::info($banners);
             return view('index', [
                 'banners' => $banners,
                 'products' => $products

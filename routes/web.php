@@ -20,7 +20,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/payment',[HomeController::class, 'payment']);
+Route::get('/payment/{productGUID}', [HomeController::class, 'payment']);
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/admin/store', 'store')->name('store');
