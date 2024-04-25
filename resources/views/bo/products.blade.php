@@ -36,6 +36,9 @@
                         Price(RM)
                     </th>
                     <th>
+                        Promo Price(RM)
+                    </th>
+                    <th>
                         Hot Sales
                     </th>
                     <th>
@@ -57,6 +60,9 @@
                             </td>
                             <td>
                                 {{ $product->Price }}
+                            </td>
+                            <td>
+                                {{ $product->PromotionPrice }}
                             </td>
                             <td>
                               <div class="form-check form-switch">
@@ -120,6 +126,12 @@
 							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00">
 						</td>
 					</tr>
+          <tr>
+            <th scope="col">Promotion Price(RM):</th>
+            <td>
+              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00">
+            </td>
+          </tr>
 					<tr>
 						<th scope="col">Quantity:</th>
 						<td>
@@ -251,7 +263,7 @@
       {
       	$('#ModalAction').val('Edit');
       	$.ajax({
-          url: globalURL + "GetProductDetails/" + productGUID,
+          url: window.location.origin + "/GetProductDetails/" + productGUID,
           method: 'GET',
           processData: false,
           contentType: false,
@@ -440,5 +452,9 @@
           }
         })
     }
+
+    $('#ModalProductPrice').change(function(){
+        $('#ModalPromoPrice').val($('#ModalProductPrice').val());
+    })
   </script>
 @endsection

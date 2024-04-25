@@ -20,7 +20,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/payment/{productGUID}', [HomeController::class, 'payment']);
+Route::get('/payment/{id}',[HomeController::class, 'payment']);
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/admin/store', 'store')->name('store');
@@ -51,3 +51,4 @@ Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name
 Route::post('set-hotsales', [ProductController::class, 'SetHotSales'])->name('SetHotSales');
 
 Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
+Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 

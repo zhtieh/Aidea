@@ -145,82 +145,187 @@ $currentURL = url()->current();
 <body>
 <div class="container">
     <div class="row header-row">
-        <img src="images/AIDEA_DESIGN_SOLUTIONS__1__logo.png" class="logo-img"alt="Aidea Group Logo">
+        <img src="{{ asset('images/AIDEA_DESIGN_SOLUTIONS__1__logo.png') }}" class="logo-img"alt="Aidea Group Logo">
         <h1 class="payment-pg-title">Payment Detail</h1>
     </div>
 </div>
 
-<div class="container payment-container">
-    <form action="" method="POST" id="payment-form" class="pay-form">
-        <div class="row">    
-            <div class="col-12 col-md-6">
-                <h2>Billing Details</h2>
+<?php
+/**
+ * This is a sample code for manual integration with senangPay
+ * It is so simple that you can do it in a single file
+ * Make sure that in senangPay Dashboard you have key in the return URL referring to this file for example http://myserver.com/senangpay_sample.php
+ */
 
-                <div class="form-group">
-                    <label for="form-name">Name <span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" id="form-name" placeholder="Abu">
-                </div>
+# please fill in the required info as below
+$merchant_id = '555171357717256';
+$secretkey = '6670-927';
 
-                <div class="form-group">
-                    <label for="form-email">Email <span style="color:red;">*</span></label>
-                    <input type="email" class="form-control" id="form-email" placeholder="sample@gmail.com">
-                </div>
 
-                <div class="form-group">
-                    <label for="form-contact">Contact <span style="color:red;">*</span></label>
-                    <input type="number" class="form-control" id="form-contact" placeholder="0123456789">
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="order-detail-container">
-                    <div class="container">
-                        <h2>Your order</h2>
-                        <div class="row" style="border-bottom: 1px solid #000; padding: 15px 10px;">
-                            <div class="col-6" style="font-weight: bold;">Product</div>
-                            <div class="col-6" style="text-align: right; font-weight: bold;">Subtotal</div>
-                        </div>
-
-                        <div class="row" style="border-bottom: 1px solid #000; padding: 15px 10px;">
-                            <div class="col-5">Buku Setting Ads Ke Wasap</div>
-                            <div class="col-1" style="padding: 0;">x1</div>
-                            <div class="col-6" style="text-align: right;">RM89.00</div>
-                        </div>
-
-                        <div class="row" style="border-bottom: 1px solid #000; padding: 15px 10px;">
-                            <div class="col-6">Subtotal</div>
-                            <div class="col-6" style="text-align: right;">RM89.00</div>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="payment1" value="eWallet" checked>
-                                <label class="form-check-label" for="payment1">
-                                    Bayar Guna TnG E-wallet / Grab-Pay
-                                </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="payment2" value="fpx">
-                                <label class="form-check-label" for="payment2">
-                                    Bayar Guna FPX Online Banking 
-                                </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="payment3" value="debitCredit">
-                                <label class="form-check-label" for="payment3">
-                                    Bayar Guna Kad Kredit atau Kad Debit
-                                    <!-- <br> -->
-                                    <img src="images/payment/card.png" width="100px" alt="card" style="margin-left: 15px;">
-                                </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+# this part is to process data from the form that user key in, make sure that all of the info is passed so that we can process the payment
+if(isset($_POST['detail']) && isset($_POST['amount']) && isset($_POST['order_id']) && isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']))
+{
+    # assuming all of the data passed is correct and no validation required. Preferably you will need to validate the data passed
+    $hashed_string = hash_hmac('sha256', $secretkey.urldecode($_POST['detail']).urldecode($_POST['amount']).urldecode($_POST['order_id']), $secretkey);
+    
+    # now we send the data to senangPay by using post method
+    ?>
+    <html>
+    <head>
+    <title>senangPay Sample Code</title>
+    </head>
+    <body onload="document.order.submit()">
+        <form name="order" method="post" action="https://sandbox.senangpay.my/payment/555171357717256">
+            <input type="hidden" name="detail" value="<?php echo $_POST['detail']; ?>">
+            <input type="hidden" name="amount" value="<?php echo $_POST['amount']; ?>">
+            <input type="hidden" name="order_id" value="<?php echo $_POST['order_id']; ?>">
+            <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
+            <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
+            <input type="hidden" name="phone" value="<?php echo $_POST['phone']; ?>">
+            <input type="hidden" name="hash" value="<?php echo $hashed_string; ?>">
+        </form>
+    </body>
+    </html>
+    <?php
+}
+# this part is to process the response received from senangPay, make sure we receive all required info
+else if(isset($_GET['status_id']) && isset($_GET['order_id']) && isset($_GET['msg']) && isset($_GET['transaction_id']) && isset($_GET['hash']))
+{
+    # verify that the data was not tempered, verify the hash
+    $hashed_string = hash_hmac('sha256', $secretkey.urldecode($_GET['status_id']).urldecode($_GET['order_id']).urldecode($_GET['transaction_id']).urldecode($_GET['msg']), $secretkey);
+    
+    # if hash is the same then we know the data is valid
+    if($hashed_string == urldecode($_GET['hash']))
+    {
+        # this is a simple result page showing either the payment was successful or failed. In real life you will need to process the order made by the customer
+        if(urldecode($_GET['status_id']) == '1')
+            echo 'Payment was successful with message: '.urldecode($_GET['msg']);
+        else
+            echo 'Payment failed with message: '.urldecode($_GET['msg']);
+    }
+    else
+        echo 'Hashed value is not correct';
+}
+# this part is to show the form where customer can key in their information
+else
+{
+    # by right the detail, amount and order ID must be populated by the system, in this example you can key in the value yourself
+?>
+    <html>
+    <head>
+    <title>senangPay Sample Code</title>
+    </head>
+    <body>
+        <form method="get" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+            <table>
+                <tr>
+                    <td colspan="2">Please fill up the detail below in order to test the payment. Order ID is defaulted to timestamp.</td>
+                </tr>
+                <tr>
+                    <td>Detail</td>
+                    <td>: <input type="text" name="detail" value="" placeholder="Description of the transaction" size="30"></td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>: <input type="text" name="amount" value="" placeholder="Amount to pay, for example 12.20" size="30"></td>
+                </tr>
+                <tr>
+                    <td>Order ID</td>
+                    <td>: <input type="text" name="order_id" value="<?php echo time(); ?>" placeholder="Unique id to reference the transaction or order" size="30"></td>
+                </tr>
+                <tr>
+                    <td>Customer Name</td>
+                    <td>: <input type="text" name="name" value="" placeholder="Name of the customer" size="30"></td>
+                </tr>
+                <tr>
+                    <td>Customer Email</td>
+                    <td>: <input type="text" name="email" value="" placeholder="Email of the customer" size="30"></td>
+                </tr>
+                <tr>
+                    <td>Customer Contact No</td>
+                    <td>: <input type="text" name="phone" value="" placeholder="Contact number of customer" size="30"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit"></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+    </html>
+<?php
+}
+?>
 
 <div class="footer-license">
     ©AIDEA DESIGN SOLUTION SDN BHD | CREATED BY VANGUARD BUFFLE
 </div>
-
 </body>
+<script>
+    $(document).ready(function()
+    {
+        var url = window.location.href;
+        var productGUID = (url.split('/')).pop();
+        console.log(productGUID);
+
+        $.ajax({
+          url: window.location.origin + "/GetProductDetails/" + productGUID,
+          method: 'GET',
+          processData: false,
+          contentType: false,
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(response){
+            var data = JSON.parse(response);
+            console.log(data);
+            if(data.product.length > 0)
+            {
+                LoadProductDetails(data.product[0]);
+            }
+            else
+            {
+                alert("Invalid Product");
+                window.location.href = window.location.origin;
+            }
+            
+          }
+        });
+    })
+
+    function LoadProductDetails(product)
+    {
+        $('#ProductDetails').html(product.Name);
+        $('#Total').html("RM" + product.Price);
+        $('#Subtotal').html("RM" + product.Price);
+    }
+
+    $('#payment-form').on('submit', function(e)
+    {
+        e.preventDefault();
+        // window.location.href = 'https://sandbox.senangpay.my/payment/555171357717256?order_id=' + uuidv4 + '&name=' + $('#form-name').val() + '&email=' +
+        // $('#form-email').val()+'&phone='+$('#form-contact');
+
+        // $.ajax({
+        //   url: 'https://sandbox.senangpay.my/payment/555171357717256?order_id=' + uuidv4 + '&name=' + $('#form-name').val() + '&email=' +
+        // $('#form-email').val()+'&phone='+$('#form-contact'),
+        //   method: 'POST',
+        //   processData: false,
+        //   contentType: false,
+        //   headers: {
+        //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //   },
+        //   success: function(response){
+        //     console.log(response)        
+        // });
+    })
+
+     function uuidv4() { 
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+        .replace(/[xy]/g, function (c) { 
+            const r = Math.random() * 16 | 0,  
+                v = c == 'x' ? r : (r & 0x3 | 0x8); 
+            return v.toString(16); 
+        }); 
+    }
+</script>
 </html>
