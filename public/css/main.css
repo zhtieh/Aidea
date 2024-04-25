@@ -81,9 +81,9 @@ section
     position: relative;
 }
 
-#product, #service
+#product, #service, #review
 {
-    background-color: #93a092;
+    background-color: #cbae8e;
 }
 
 #find-us
@@ -91,7 +91,7 @@ section
     padding: 0;
 }
 
-#about, #review
+#about
 {
     background-color: #e2e4d0;
 }
@@ -134,7 +134,7 @@ section
 .navbar-light .navbar-nav .nav-item .nav-link:hover,
 .navbar-light .navbar-nav .nav-item.active .nav-link
 {
-    background: #93a092;
+    background: #cbae8e;
     color: #ffe9b7;
     transition: .5s;
 }
@@ -176,10 +176,10 @@ section
 .footer
 {
     padding: 3rem 7%;
-    background-color: #a0b89e;
-    /* background-image: url("../images/aidea-footer-bg.png");
-    background-size:cover;
-    background-repeat: no-repeat; */
+    /* background-color: #a0b89e; */
+    background-image: url(../images/contact/aidea-contact-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .footer-logo

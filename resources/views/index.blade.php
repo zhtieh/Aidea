@@ -87,7 +87,7 @@ AIDEA Home
 {
     width: 20%;
     margin: 1rem auto;
-    background: linear-gradient(to right, #d6c59f, #93a092);
+    background: linear-gradient(to right, #c69261, #a2a2a2);
     outline: none;
     border: 1px solid #fff;
     padding: 15px 30px;
@@ -100,7 +100,7 @@ AIDEA Home
 
 .linkProduct-btn1
 {
-    background: linear-gradient(to right, #d6c59f, #b58be9);
+    background: linear-gradient(to right, #e9e1d4, #c7a687);
     margin-right: 20px;
 }
 
@@ -237,14 +237,25 @@ AIDEA Home
 
 .btn-read-more, .btn-buy
 {
-    color: #9c7912;
-    background-color: #add1aa;
+    color: #fff;
+    background-color: #c2a182;
+}
+
+.btn-buy a
+{
+    color: #fff;
 }
 
 .btn-read-more:hover, .btn-buy:hover
 {
-    color: #9c7912;
-    background-color: #90af8e;
+    color: #fff;
+    background-color: #89735e;
+    text-decoration: none;
+}
+
+.btn-buy a:hover
+{
+    text-decoration: none;
 }
 
 .promo-list-content
@@ -638,7 +649,9 @@ AIDEA Home
   color: #ffffff;
   text-align: left;
   line-height: 1.4em;
-  background-color: #78b18f;
+  /* background-color: #78b18f; */
+  background-color: rgba(255,255,255,.5);
+  backdrop-filter: blur(10px);
   padding-top: 120px;
   height: 300px;
 }
@@ -687,6 +700,7 @@ AIDEA Home
   top: 0;
   right: 0;
   text-align: right;
+  color: #775841;
 }
 .snip1359 h3 span {
   display: block;
@@ -1220,33 +1234,33 @@ AIDEA Home
             <div class="col-md-3">
                 <div class="service-info-wrap">
                     <img src="images/service/Kerja-kerja-Renovasi.png" alt="service 1">
-                    <p><b>Interior Design & Space Planning</b></p>
+                    <p style="color: #775841;"><b>Interior Design & Space Planning</b></p>
 
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                    <span style="color: #775841;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="service-info-wrap">
                     <img src="images/service/Konsultan-hiasan-dalaman.png" alt="service 2">
-                    <p><b>Interior Design & Space Planning</b></p>
+                    <p style="color: #775841;"><b>Interior Design & Space Planning</b></p>
 
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                    <span style="color: #775841;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="service-info-wrap">
                     <img src="images/service/Pembinaan -hiasan-dalaman.png" alt="service 3">
-                    <p><b>Interior Design & Space Planning</b></p>
+                    <p style="color: #775841;"><b>Interior Design & Space Planning</b></p>
 
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                    <span style="color: #775841;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="service-info-wrap">
                     <img src="images/service/Pengurusan-Projek.png" alt="service 4">
-                    <p><b>Interior Design & Space Planning</b></p>
+                    <p style="color: #775841;"><b>Interior Design & Space Planning</b></p>
 
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                    <span style="color: #775841;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                 </div>
             </div>
         </div>
