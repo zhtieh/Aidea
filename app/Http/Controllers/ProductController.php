@@ -28,17 +28,38 @@ class ProductController extends Controller
 
 	public function index()
     {
-    	$products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, p.HotSales, p.CoverPhotoURL 
+    	$products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.PromotionPrice, p.Price, p.Quantity, p.Sold, p.HotSales, p.CoverPhotoURL 
 								FROM u859417454_Aidea.Product p;");
 
     	return view('bo.products')->with('products',$products);
+    }
+
+    public function GetProductForPayment($productGUID)
+    {
+        try
+        {
+            $products = DB::select("SELECT p.Name, CASE WHEN p.PromotionPrice IS NOT NULL AND p.PromotionPrice > 0.00  AND p.PromotionPrice <= p.Price THEN
+                                        p.PromotionPrice
+                                        ELSE 
+                                         p.Price 
+                                         END AS Price
+                                FROM u859417454_Aidea.Product p
+                                WHERE p.ProductGUID = ?
+                                LIMIT 1;",[$productGUID]);
+
+            return json_encode(['status' => 1, 'product' => $products]);
+        }
+        catch(Exception $e)
+        {
+            Log::debug($e);
+        }
     }
 
     public function GetActiveProduct()
     {
         try
         {
-            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.PromotionPrice, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
                                             IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
                                             IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p;");
@@ -55,7 +76,7 @@ class ProductController extends Controller
 	{
 		try
         {
-            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.PromotionPrice, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
 											IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
                                             IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p
@@ -137,7 +158,7 @@ class ProductController extends Controller
                 Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
             }
 
-            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,Photo5URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
+            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,PromotionPrice,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,Photo5URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['PromoPrice'],$request['Price'],$request['Quantity'],
                 $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL]);
 
             return json_encode(['status' => 1]);
@@ -283,8 +304,8 @@ class ProductController extends Controller
                 }
             }
 
-            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,Photo5URL = ?,FileURL = ?
-                WHERE ProductGUID = ?;", [$request['Name'],$request['Description'],$request['Price'],$request['Quantity'],
+            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, PromotionPrice = ?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,Photo5URL = ?,FileURL = ?
+                WHERE ProductGUID = ?;", [$request['Name'],$request['Description'],$request['PromoPrice'],$request['Price'],$request['Quantity'],
                 $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL,$request['ProductGUID']]);
 
             return json_encode(['status' => 1]);

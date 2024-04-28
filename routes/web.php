@@ -51,4 +51,4 @@ Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name
 Route::post('set-hotsales', [ProductController::class, 'SetHotSales'])->name('SetHotSales');
 
 Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
-Route::get('GetProductDetails/{productGUID}', [ProductController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
+Route::get('GetProductForPayment/{productGUID}', [ProductController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
