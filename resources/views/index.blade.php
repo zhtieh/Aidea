@@ -100,8 +100,13 @@ AIDEA Home
 
 .linkProduct-btn1
 {
-    background: linear-gradient(to right, #e9e1d4, #c7a687);
+    background: linear-gradient(to right, #b93737, #cdce2d);
     margin-right: 20px;
+}
+
+.linkProduct-btn:hover
+{
+    color: #fff;
 }
 
 .linkProduct-btn2
@@ -565,6 +570,7 @@ AIDEA Home
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 1.5rem;
     max-width: 134px;
     width: 100%;
     height: auto;
@@ -666,7 +672,7 @@ AIDEA Home
 }
 .snip1359 figcaption {
   width: 100%;
-  background-color: #93c9a8;
+  background-color: #e2e4d0;
   padding: 25px;
   position: relative;
   height: 100%;
@@ -680,7 +686,7 @@ AIDEA Home
   height: 0;
   border-style: solid;
   border-width: 55px 0 0 400px;
-  border-color: transparent transparent transparent #93c9a8;
+  border-color: transparent transparent transparent #e2e4d0;
 }
 .snip1359 .profile {
   border-radius: 50%;
@@ -705,7 +711,7 @@ AIDEA Home
 .snip1359 h3 span {
   display: block;
   font-size: 0.65em;
-  color: #2980b9;
+  color: #d1a8a6;
 }
 .snip1359 blockquote {
   margin: 0 0 10px;
@@ -714,6 +720,7 @@ AIDEA Home
   opacity: 0.8;
   font-style: italic;
   font-weight: 300;
+  color: #775841;
 }
 .snip1359 blockquote:after {
   font-family: 'FontAwesome';
@@ -721,7 +728,7 @@ AIDEA Home
   position: absolute;
   font-size: 180px;
   line-height: 1em;
-  color: #212121;
+  color: #7e6c6c;
   font-style: normal;
   content: "\201D";
   right: 20px;
@@ -959,6 +966,8 @@ AIDEA Home
                 </div>
                 @endforeach
             @endif
+        </div>
+    </div>
             
             <!-- <div class="item">
                 <div class="product-frame">
@@ -1031,8 +1040,9 @@ AIDEA Home
         </div>
     </div> -->
 
-    <!-- <div class="container-custom hot-sales">
+    <div class="container-custom hot-sales">
         <div class="row">
+        @if(isset($hotsale))
             <div class="col-md-4 promo-content-center">
                 <div class="promo-content-container">
                     <h1 class="promo-word">HOT</h1>
@@ -1041,28 +1051,28 @@ AIDEA Home
                 </div>
             </div>
             <div class="col-md-4" style="padding: 10px;">
-                <div class="item">
+                <div class="item">  
                     <div class="product-frame">
                         <div class="product-image">
                             <div class="overlay project-content-box">
                                 <div class="content-container">
                                     <div class="d-flex" style="justify-content:center;">
-                                        <div class="more-img-btn" onclick="openModal(1);"><i
+                                        <div class="more-img-btn" onclick="openModal( {{ $hotsale[0]->ProductID }} );"><i
                                                 class="fa fa-ellipsis-h fa-icon"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <img src="images/project/product-cover.jpg" class="hot-sale-img" alt="Product 1">
+                            <img src="{{ $hotsale[0]->CoverPhotoURL }}" class="hot-sale-img" alt="{{ $hotsale[0]->Name }}">
                         </div>
                         <div class="product-content">
-                            <div class="product-title"><h3>DESIGN NO. 03- 1000SF APARTMENT</h3></div>
-                            <div class="product-price">RM 500</div>
+                            <div class="product-title"><h3>{{ $hotsale[0]->Name }}</h3></div>
+                            <div class="product-price">RM {{ $hotsale[0]->Price }}</div>
                             <div class="d-flex">
-                                <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product1">Read More <i class="fa fa-info-circle"></i></button>
-                                <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
+                                <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#hotSales1">Read More <i class="fa fa-info-circle"></i></button>
+                                <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $hotsale[0]->ProductGUID }}">Click to buy <i class="fa fa-shopping-cart"></i></a></button>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 promo-content-center2">
@@ -1074,8 +1084,9 @@ AIDEA Home
                     <li>The quality of materials used is superior.</li>
                 </ul>
             </div>
+        @endif 
         </div> 
-    </div> -->
+    </div>
 </section>
 
 @if(isset($products))
@@ -1120,79 +1131,47 @@ AIDEA Home
     </div>
     @endforeach
 @endif
-<!-- <div class="modal fade" id="product1" tabindex="-1" aria-labelledby="product1" aria-hidden="true">
+
+@if(isset($hotsale))
+<div id="lightbox-modal{{ $hotsale[0]->ProductID }}" class="modalImg">
+    <span class="close cursor" onclick="closeModal({{ $hotsale[0]->ProductID }})">&times;</span>
+    <div class="modal-img-content">
+        <div class="modalFrame">
+            <img src="{{ $hotsale[0]->Photo1URL }}" class="lightbox-img" alt="Image 1">
+        </div>
+        <div class="modalFrame">
+            <img src="{{ $hotsale[0]->Photo2URL }}" class="lightbox-img" alt="Image 2">
+        </div>
+        <div class="modalFrame">
+            <img src="{{ $hotsale[0]->Photo3URL }}" class="lightbox-img" alt="Image 3">
+        </div>
+        <div class="modalFrame">
+            <img src="{{ $hotsale[0]->Photo4URL }}" class="lightbox-img" alt="Image 4">
+        </div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1, {{ $hotsale[0]->ProductID }})">&#10094;</a>
+    <a class="next" onclick="plusSlides(1, {{ $hotsale[0]->ProductID }})">&#10095;</a>
+</div>
+
+<div class="modal fade" id="hotSales1" tabindex="-1" aria-labelledby="hotSales1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="product1">Modal title</h5>
+            <h5 class="modal-title" id="hotSales1">{{ $hotsale[0]->Name }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <p>{{ $hotsale[0]->Description }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div> -->
-
-<!-- <div id="lightbox-modal1" class="modalImg">
-    <span class="close cursor" onclick="closeModal(1)">&times;</span>
-    <div class="modal-img-content">
-        <div class="modalFrame">
-            <img src="images/project/designNo03-001.jpg" class="lightbox-img" alt="Image 1">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/designNo03-002.jpg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/designNo03-003.jpg" class="lightbox-img" alt="Image 3">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/designNo03-004.jpg" class="lightbox-img" alt="Image 4">
-        </div>
-    </div>
-    <a class="prev" onclick="plusSlides(-1, 1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1, 1)">&#10095;</a>
-</div> -->
-
-<!-- <div id="lightbox-modal2" class="modalImg">
-    <span class="close cursor" onclick="closeModal(2)">&times;</span>
-    <div class="modal-img-content">
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (1).jpeg" class="lightbox-img" alt="Image 1">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (2).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (3).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (4).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (5).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (6).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (7).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (8).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-        <div class="modalFrame">
-            <img src="images/project/fab-kuching (9).jpeg" class="lightbox-img" alt="Image 2">
-        </div>
-    </div>
-    <a class="prev" onclick="plusSlides(-1, 2)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1, 2)">&#10095;</a>
-</div> -->
+</div>
+@endif
 
 <section id="about">
     <div class="container">
@@ -1288,7 +1267,7 @@ AIDEA Home
         <div class="review-carousel owl-carousel owl-theme">
             <div class="item">
                 <figure class="snip1359">
-                    <figcaption><img src="images/review/amirah-fotor-2024041119424.png" alt="profile-sample6" class="profile" />
+                    <figcaption><img src="images/review/amirah-fotor-2024041119424.png" alt="profile-sample6" class="profile" style="padding: unset;"/>
                         <blockquote>I'm looking for something that can deliver a 50-pound payload of snow on a small feminine target. Can you suggest something? Hello...? </blockquote>
                     </figcaption>
                     <h3>Hans Down<span>Engineer</span></h3>
@@ -1297,7 +1276,7 @@ AIDEA Home
 
             <div class="item">
             <figure class="snip1359">
-                <figcaption><img src="images/review/avatarM-fotor-20240411194454.png" alt="profile-sample7" class="profile" />
+                <figcaption><img src="images/review/avatarM-fotor-20240411194454.png" alt="profile-sample7" class="profile" style="padding: unset;"/>
                     <blockquote>Calvin: I'm a genius, but I'm a misunderstood genius. Hobbes: What's misunderstood about you? Calvin: Nobody thinks I'm a genius.</blockquote>
                 </figcaption>
                 <h3>Wisteria Widget<span>Photographer</span></h3>
@@ -1306,7 +1285,7 @@ AIDEA Home
 
             <div class="item">
                 <figure class="snip1359">
-                    <figcaption><img src="images/review/Lieza-fotor-2024041119458.png" alt="profile-sample9" class="profile" />
+                    <figcaption><img src="images/review/Lieza-fotor-2024041119458.png" alt="profile-sample9" class="profile" style="padding: unset;"/>
                         <blockquote>Sorry to say but if you want to stay dad you've got to polish your image. I think the image we need to create for you is "repentant but learning".</blockquote>
                     </figcaption>
                     <h3>Desmond Eagle<span>Accountant</span></h3>
@@ -1315,7 +1294,7 @@ AIDEA Home
 
             <div class="item">
                 <figure class="snip1359">
-                    <figcaption><img src="images/review/Naky-fotor-20240411194337.png" alt="profile-sample6" class="profile" />
+                    <figcaption><img src="images/review/Naky-fotor-20240411194337.png" alt="profile-sample6" class="profile" style="padding: unset;"/>
                         <blockquote>I'm looking for something that can deliver a 50-pound payload of snow on a small feminine target. Can you suggest something? Hello...? </blockquote>
                     </figcaption>
                     <h3>Hans Down<span>Engineer</span></h3>
@@ -1324,7 +1303,7 @@ AIDEA Home
 
             <div class="item">
                 <figure class="snip1359">
-                    <figcaption><img src="images/review/Roslan-fotor-2024041119449.png" alt="profile-sample6" class="profile" />
+                    <figcaption><img src="images/review/Roslan-fotor-2024041119449.png" alt="profile-sample6" class="profile" style="padding: unset;"/>
                         <blockquote>I'm looking for something that can deliver a 50-pound payload of snow on a small feminine target. Can you suggest something? Hello...? </blockquote>
                     </figcaption>
                     <h3>Hans Down<span>Engineer</span></h3>

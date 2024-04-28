@@ -17,13 +17,20 @@ class HomeController extends Controller
                                 FROM u859417454_Aidea.Banner b
                                 ORDER BY b.Sequence;");
             
-            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+            $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.Price, p.PromotionPrice, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
                                     IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
                                     IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
                                 FROM u859417454_Aidea.Product p;");
+            
+            $hotsales = DB::SELECt("SELECT p.ProductID, p.ProductGUID, p.Name, p.Description, p.Price, p.PromotionPrice, p.Quantity, p.Sold, p.HotSales, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
+                                    IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
+                                    IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
+                                    FROM u859417454_Aidea.Product p WHERE p.HotSales = 1");
+
             return view('index', [
                 'banners' => $banners,
-                'products' => $products
+                'products' => $products,
+                'hotsale' => $hotsales
             ]);
 
         } catch (Exception $e) {
