@@ -265,19 +265,26 @@ AIDEA Home
 
 .promo-list-content
 {
-    list-style-type: none;
+    margin-left: 15px;
+    display: grid;
+    grid-template-columns: 45px 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;   
 }
 
-.promo-list-content li{
-    font-size: 20px;
+.tick
+{
+    color: green;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.benf
+{
+    font-size: 26px;
     font-weight: bold;
     color: #fff;
-}
-
-.promo-list-content li::before{
-    content: '\2713';
-    color: green;
-    margin-right: 8px;
 }
 
 .modalImg {
@@ -1076,13 +1083,52 @@ AIDEA Home
                 </div>
             </div>
             <div class="col-md-4 promo-content-center2">
+                <!-- <ul style="list-style-type: none;">
+                    <li style="color: green;">&#x2713;</li>
+                    <li style="color: green;">&#x2713;</li>
+                    <li style="color: green;">&#x2713;</li>
+                    <li style="color: green;">&#x2713;</li>
+                    <li style="color: green;">&#x2713;</li>
+                </ul>
                 <ul class="promo-list-content">
                     <li>Good</li>
                     <li>Excellent</li>
                     <li>This product is of the highest quality.</li>
                     <li>The craftsmanship on this product is top-notch.</li>
                     <li>The quality of materials used is superior.</li>
-                </ul>
+                </ul> -->
+                <div class="promo-list-content">
+                    <div class="tick">
+                        &#x2713;
+                    </div>
+                    <div class="benf">
+                        <p>Good</p>
+                    </div>
+                    <div class="tick">
+                        &#x2713;
+                    </div>
+                    <div class="benf">
+                        <p>Excellent</p>
+                    </div>
+                    <div class="tick">
+                        &#x2713;
+                    </div>
+                    <div class="benf">
+                        <p>This product is of the highest quality.</p>
+                    </div>
+                    <div class="tick">
+                        &#x2713;
+                    </div>
+                    <div class="benf">
+                        <p>The craftsmanship on this product is top-notch.</p>
+                    </div>
+                    <div class="tick">
+                        &#x2713;
+                    </div>
+                    <div class="benf">
+                        <p>The quality of materials used is superior.</p>
+                    </div>
+                </div>
             </div>
         @endif 
         </div> 
