@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Account\LoginRegisterController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SenangPayController;
 use App\Http\Controllers\HomeController;
 
 
@@ -51,4 +52,5 @@ Route::post('delete-product', [ProductController::class, 'DeleteProduct'])->name
 Route::post('set-hotsales', [ProductController::class, 'SetHotSales'])->name('SetHotSales');
 
 Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
-Route::get('GetProductForPayment/{productGUID}', [ProductController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
+Route::get('GetProductForPayment/{productGUID}', [SenangPayController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
+Route::post('CreatePayment', [SenangPayController::class, 'CreatePayment'])->name('CreatePayment'); 

@@ -151,9 +151,9 @@ $currentURL = url()->current();
 </div>
 <div class="container payment-container">
     <form action="https://app.senangpay.my/payment/294171328165594" method="POST" id="payment-form" class="pay-form">
-        @crsf
         <div class="row">    
             <div class="col-12 col-md-6">
+                <input type="hidden" id="ProductGUID" name="ProductGUID" value="">
                 <h2>Billing Details</h2>
 
                 <div class="form-group">
@@ -228,8 +228,8 @@ $currentURL = url()->current();
     {
         var url = window.location.href;
         var productGUID = (url.split('/')).pop();
-        console.log(productGUID);
-        console.log($('meta[name="csrf-token"]').attr('content'));
+        $('#ProductGUID').val(productGUID);
+        
 
         $.ajax({
           url: window.location.origin + "/GetProductForPayment/" + productGUID,
@@ -242,21 +242,20 @@ $currentURL = url()->current();
           success: function(response){
             var data = JSON.parse(response);
             console.log(data);
-            // if(data.product.length > 0)
-            // {
-            //     LoadProductDetails(data.product[0]);
-            // }
+            if(data.product.length > 0)
+            {
+                LoadProductDetails(data.product[0]);
+            }
             // else
             // {
-            //     // alert("Invalid Product");
-            //     // window.location.href = window.location.origin;
+            //     alert("Invalid Product");
+            //     window.location.href = window.location.origin;
             // }
-            
           },
           error: function(e)
           {
-            // alert("Invalid Product");
-            // window.location.href = window.location.origin;
+            alert("Invalid Product");
+            window.location.href = window.location.origin;
           }
         });
     })
@@ -268,25 +267,24 @@ $currentURL = url()->current();
         $('#Subtotal').html("RM" + product.Price);
     }
 
-    // $('#payment-form').on('submit', function(e)
-    // {
-    //     e.preventDefault();
-    //     // window.location.href = 'https://sandbox.senangpay.my/payment/555171357717256?order_id=' + uuidv4 + '&name=' + $('#form-name').val() + '&email=' +
-    //     // $('#form-email').val()+'&phone='+$('#form-contact');
-
-    //     // $.ajax({
-    //     //   url: 'https://sandbox.senangpay.my/payment/555171357717256?order_id=' + uuidv4 + '&name=' + $('#form-name').val() + '&email=' +
-    //     // $('#form-email').val()+'&phone='+$('#form-contact'),
-    //     //   method: 'POST',
-    //     //   processData: false,
-    //     //   contentType: false,
-    //     //   headers: {
-    //     //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     //   },
-    //     //   success: function(response){
-    //     //     console.log(response)        
-    //     // });
-    // })
+    $('#payment-form').on('submit', function(e)
+    {
+        e.preventDefault();
+        var formData = new FormData(this);
+        // $.ajax({
+        //   url:"{{ route('CreatePayment') }}",
+        //   method: 'POST',
+        //   data: formData,
+        //   processData: false,
+        //   contentType: false,
+        //   headers: {
+        //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //   },
+        //   success: function(response){
+        //     console.log(response);
+        //   }
+        // })
+    })
 
      function uuidv4() { 
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
