@@ -148,7 +148,7 @@ $currentURL = url()->current();
         <div class="col-12 col-md-4 mb-5">
             <div class="mapouter">
                 <div class="gmap_canvas">
-                    <iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=cool tint 3s&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                    <iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=Aidea%20Group%20Sdn%20Bhd+(Aidea%20Group%20Sdn%20Bhd)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                         <a href="https://connectionsgame.org/">Connections Puzzle</a>
                     </div>
                     <style>

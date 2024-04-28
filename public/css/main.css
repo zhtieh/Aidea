@@ -180,6 +180,7 @@ section
     background-image: url(../images/contact/aidea-contact-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: bottom;
 }
 
 .footer-logo
@@ -238,8 +239,8 @@ section
 
 .footer-license
 {
-    background-color: #93a092;
-    color: #ffe9b7;
+    background-color: #cbae8e;
+    color: #fff;
     text-align: center;
     padding: 1% 0;
 }
