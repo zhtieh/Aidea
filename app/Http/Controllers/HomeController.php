@@ -27,6 +27,8 @@ class HomeController extends Controller
                                     IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.FileURL,'') AS FileURL
                                     FROM u859417454_Aidea.Product p WHERE p.HotSales = 1");
 
+            Log::info($products);
+
             return view('index', [
                 'banners' => $banners,
                 'products' => $products,

@@ -235,6 +235,22 @@ AIDEA Home
     margin-bottom: 15px;
 }
 
+.promotion
+{
+    position: relative;
+    width: fit-content;
+}
+
+.promotion:after
+{
+    content:"";
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    border-bottom: 3px solid #000;
+}
+
 .purchase-btn 
 {
     margin-left: 15px;
@@ -470,6 +486,14 @@ AIDEA Home
     }
 }
 
+@media(max-width: 1200px)
+{
+    .benf
+    {
+        font-size: 20px;
+    }
+}
+
 @media(max-width: 1100px)
 {
     .promo-word
@@ -493,6 +517,11 @@ AIDEA Home
     .promo-word-2
     {
         font-size: 80px;
+    }
+    
+    .benf
+    {
+        font-size: 18px;
     }
 }
 
@@ -519,6 +548,11 @@ AIDEA Home
     .space-pro
     {
         margin-left: 3rem;
+    }
+
+    .promo-list-content
+    {
+        margin: 2rem auto 0;
     }
 }
 
@@ -963,7 +997,14 @@ AIDEA Home
                         </div>
                         <div class="product-content">
                             <div class="product-title">{{ $product->Name }}</div>
-                            <div class="product-price">{{ $product->Price }}</div>
+                            @if($product->PromotionPrice == 0)
+                                <div class="product-price">{{ $product->Price }}</div>
+                            @else
+                                <div class="d-flex">
+                                    <div class="product-price promotion">{{ $product->Price }}</div>
+                                    <div class="product-price"><i class="fa fa-arrow-right" aria-hidden="true" style="margin: 0 10px;"></i>{{ $product->PromotionPrice }}</div>
+                                </div>
+                            @endif
                             <div class="d-flex">
                                 <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product{{ $index + 1 }}">Read More <i class="fa fa-info-circle"></i></button>
                                 <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $product->ProductGUID }}">Click to buy <i class="fa fa-shopping-cart"></i></a></button>
@@ -1073,7 +1114,14 @@ AIDEA Home
                         </div>
                         <div class="product-content">
                             <div class="product-title"><h3>{{ $hotsale[0]->Name }}</h3></div>
-                            <div class="product-price">RM {{ $hotsale[0]->Price }}</div>
+                            @if($hotsale[0]->PromotionPrice == 0)
+                                <div class="product-price">RM {{ $hotsale[0]->Price }}</div>
+                            @else
+                                <div class="d-flex">
+                                    <div class="product-price promotion">RM {{ $hotsale[0]->Price }}</div>
+                                    <div class="product-price"><i class="fa fa-arrow-right" aria-hidden="true" style="margin: 0 10px;"></i>{{ $hotsale[0]->PromotionPrice }}</div>
+                                </div>
+                            @endif
                             <div class="d-flex">
                                 <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#hotSales1">Read More <i class="fa fa-info-circle"></i></button>
                                 <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $hotsale[0]->ProductGUID }}">Click to buy <i class="fa fa-shopping-cart"></i></a></button>
