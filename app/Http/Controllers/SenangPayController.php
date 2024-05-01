@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 use GuzzleHttp\Client;
 
+use SenangPay\SenangPay;
+
 use File;
 
 /**
@@ -54,8 +56,6 @@ class SenangPayController extends Controller
 	{
 		try
 		{
-			Log::debug($request);
-
 			$products = DB::select("SELECT p.Name, CASE WHEN p.PromotionPrice IS NOT NULL AND p.PromotionPrice > 0.00  AND p.PromotionPrice <= p.Price THEN
                                         p.PromotionPrice
                                         ELSE 
@@ -65,53 +65,35 @@ class SenangPayController extends Controller
                                 WHERE p.ProductGUID = ?
                                 LIMIT 1;",[$request['ProductGUID']]);
 
-			if(is_null($products))
+			if(is_null($products) || !isset($products))
 			{
 				return response()->json(['status' => 0, 'error' => 'Invalid Product.'], 500);
 			}
 			else
 			{
-				$secretKey = '294171328165594';
-				$merchantId = '41440-511';
+				$secretKey = '6670-927';
 
-				$client = new Client();
-
-				
+				$OrderGUID = $this->GUIDv4();
 
 				$data = [
-					'detail' => $products[0]->Name,
+					'detail' => str_replace(" ", "_", $products[0]->Name),
 				    'amount' => $products[0]->Price,
-				    'order_id' => $this->GUIDv4(),
+				    'order_id' => $OrderGUID,
 				    'name' => $request['name'],
 				    'email' => $request['email'],
 				    'phone' => $request['phone']
 				    // ... other required parameters
 				];
 
-				$signature = hash_hmac('sha256', json_encode($data), $secretKey);
 
-				$response = $client->post('https://api.senangpay.my/v3/payment', [
-							    'headers' => [
-							        'Authorization' => 'Basic ' . base64_encode($merchantId . ':' . $secretKey),
-							        'Content-Type' => 'application/json',
-							    ],
-							    'json' => $data,
-							    'query' => ['signature' => $signature],
-							]);
+				$signature = hash_hmac('sha256', $secretKey.str_replace(" ", "_", $products[0]->Name).$products[0]->Price.$OrderGUID, $secretKey);
 
-				// Get payment URL from response
-				$responseBody = (string) $response->getBody();
 
-				// Decode JSON string into a PHP array or object
-				$data = json_decode($responseBody, true); // Use true for associative array
+				DB::insert("INSERT INTO u859417454_Aidea.Order (OrderGUID, detail, amount, name, email, phone, hash, ProductGUID) VALUES 
+					(?,?,?,?,?,?,?,?)",[$OrderGUID,str_replace(" ", "_", $products[0]->Name),$products[0]->Price,$request['name'],$request['email'],
+					$request['phone'],$signature,$request['ProductGUID']]);
 
-				console.log($response);
-
-				// Access data from the decoded array
-				$paymentUrl = $data['data']['payment_url'];
-
-				// Redirect user to payment URL
-				return redirect()->away($paymentUrl);
+				return json_encode(['status' => 1, 'data' => $data, 'signature' => $signature], 200);
 			}
 			
 		}
@@ -120,6 +102,54 @@ class SenangPayController extends Controller
 			Log::debug($e);
 
             return json_encode(['status' => 0]);
+		}
+	}
+
+	public function ReturnCall(Request $request)
+	{
+		try
+		{
+			Log::debug($request);
+
+			$exist = DB::select("SELECT EXISTS(SELECT * FROM u859417454_Aidea.Order WHERE OrderGUID = ?) AS Number;", [$request["order_id"]]);
+
+			Log::debug($exist);
+
+			$secretKey = '6670-927';
+
+			$signature = hash_hmac('sha256', $secretKey.$request["status_id"].$request["order_id"].$request["transaction_id"].$request["msg"], $secretKey);
+
+			if(($exist[0]->Number > 0) && ($signature == $request["hash"]))
+			{
+				if($request["status_id"] == '1' AND $request["msg"] == 'Payment_was_successful')
+				{
+					DB::insert("UPDATE u859417454_Aidea.Order SET status_id = 1, msg = 'Payment_was_successful', Status = 'S', transaction_id = ? WHERE OrderGUID = ?", [$request["transaction_id"],$request["order_id"]]);
+
+					return view('paymentresult')->with('result','S');
+				}
+				else if($request["status_id"] == '2')
+				{
+					DB::insert("UPDATE u859417454_Aidea.Order SET status_id = 2, msg = ?, Status = 'P', transaction_id = ? WHERE OrderGUID = ?", [$request["msg"],$request["transaction_id"],$request["order_id"]]);
+
+					return view('paymentresult')->with('result','P');
+				}
+				else
+				{
+					DB::insert("UPDATE u859417454_Aidea.Order SET status_id = 3, msg = ?, Status = 'F', transaction_id = ? WHERE OrderGUID = ?", [$request["msg"],$request["transaction_id"],$request["order_id"]]);
+
+					return view('paymentresult')->with('result','F');
+				}
+			}
+			else
+			{
+				return json_encode(['status' => 0, 'error' => 'An error occurred.'], 500);
+			}
+		}
+		catch(Exception $e)
+		{
+			Log::debug($e);
+
+            return json_encode(['status' => 0, 'error' => 'An error occurred.'], 500);
 		}
 	}
 

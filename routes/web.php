@@ -54,3 +54,4 @@ Route::post('set-hotsales', [ProductController::class, 'SetHotSales'])->name('Se
 Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])->name('GetActiveProduct'); 
 Route::get('GetProductForPayment/{productGUID}', [SenangPayController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
 Route::post('CreatePayment', [SenangPayController::class, 'CreatePayment'])->name('CreatePayment'); 
+Route::get('ReturnCall', [SenangPayController::class, 'ReturnCall'])->name('ReturnCall'); 
