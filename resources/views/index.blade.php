@@ -114,14 +114,15 @@ AIDEA Home
     margin-left: 20px;
 }
 
-.owl-carousel.owl-loaded
+.product-carousel.owl-carousel.owl-loaded
 {
     position: relative;
 }
 
-.owl-carousel .item
+.product-carousel.owl-carousel .item
 {
     width: 100%;
+    max-width: 565.3px;
     height: auto;
     /* background-color: #e8e8e8;  */
     background-color: rgba(255, 255, 255, 0.6) !important;
@@ -151,7 +152,7 @@ AIDEA Home
     font-size: 2rem;
 }
 
-.owl-carousel .owl-nav button.owl-prev
+.product-carousel.owl-carousel .owl-nav button.owl-prev
 {
     position: absolute;
     top: 50%;
@@ -162,7 +163,7 @@ AIDEA Home
     color: #fff;
 }
 
-.owl-carousel .owl-nav button.owl-next
+.product-carousel.owl-carousel .owl-nav button.owl-next
 {
     position: absolute;
     top: 50%;
@@ -173,9 +174,10 @@ AIDEA Home
     color: #fff;
 }
 
-.owl-carousel .owl-item img
+.product-carousel.owl-carousel .owl-item img
 {
     width: 90%;
+    height: 500px;
     margin: 0 auto;
     padding: 15px 10px;
     border-top-right-radius: 50%;
@@ -256,10 +258,17 @@ AIDEA Home
     margin-left: 15px;
 }
 
-.btn-read-more, .btn-buy
+.btn-read-more
 {
     color: #fff;
     background-color: #c2a182;
+}
+
+.btn-buy
+{
+    background: linear-gradient(to right, #b93737, #cdce2d);
+    color: #fff;
+    border: 0;
 }
 
 .btn-buy a
@@ -401,10 +410,12 @@ AIDEA Home
 {
     /* width: 100%; */
     width: 90%;
+    height: 500px;
     margin: 0 auto;
     padding: 15px 10px;
     border-top-right-radius: 50%;
     border-bottom-left-radius: 50%;
+    display: block;
 }
 
 .hot-sales .product-frame
@@ -475,6 +486,11 @@ AIDEA Home
 
 @media(max-width: 1400px)
 {
+    .product-carousel.owl-carousel .owl-item img, .hot-sale-img
+    {
+        height: 450px;
+    }
+
     .promo-word
     {
         font-size: 120px;
@@ -488,6 +504,11 @@ AIDEA Home
 
 @media(max-width: 1200px)
 {
+    .product-carousel.owl-carousel .owl-item img, .hot-sale-img
+    {
+        height: 380px;
+    }
+
     .benf
     {
         font-size: 20px;
@@ -509,6 +530,29 @@ AIDEA Home
 
 @media(max-width: 992px)
 {
+    .product-carousel.owl-carousel .owl-item img
+    {
+        height: 450px;
+    }
+
+    .hot-sale-img
+    {
+        height: 400px;
+    }
+
+    .promo-content-container
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .hot-sales .item
+    {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
     .promo-word
     {
         font-size: 80px;
@@ -517,6 +561,11 @@ AIDEA Home
     .promo-word-2
     {
         font-size: 80px;
+    }
+
+    .promo-list-content
+    {
+        margin: 2rem auto 0;
     }
     
     .benf
@@ -527,6 +576,11 @@ AIDEA Home
 
 @media(max-width: 767.8px)
 {
+    .product-carousel.owl-carousel .owl-item img, .hot-sale-img
+    {
+        height: 380px;
+    }
+
     .btn
     {
         font-size: 1.5rem;
@@ -538,35 +592,26 @@ AIDEA Home
         margin: 0 auto;
     }
 
-    .promo-content-container
-    {
-        position: relative;
-        display: flex;
-        justify-content: center;
-    }
-
     .space-pro
     {
         margin-left: 3rem;
     }
+}
 
-    .promo-list-content
+@media(max-width: 600.8px)
+{
+    .product-carousel.owl-carousel .item
     {
-        margin: 2rem auto 0;
+        max-width: 350px;
+        margin: 0 auto;
     }
 }
 
 @media(max-width: 575.8px)
 {
-    .owl-carousel .item
+    .product-carousel.owl-carousel .item
     {
         background-color: transparent;
-    }
-
-    .product-frame
-    {
-        max-width: 350px;
-        margin: 0 auto;
     }
 
     .hot-sales .product-frame
@@ -574,11 +619,24 @@ AIDEA Home
         max-width: 385px;
     }
 
+    .promo-word, .promo-word-2
+    {
+        font-size: 55px;
+    }
+
     .prev,
     .next {
         top: 55%;
     }
 
+}
+
+@media(max-width: 320px)
+{
+    .promo-word, .promo-word-2
+    {
+        font-size: 45px;
+    }
 }
 /* About */
 
@@ -765,15 +823,15 @@ AIDEA Home
 }
 .snip1359 blockquote:after {
   font-family: 'FontAwesome';
-  content: "\201C";
+  content: "\f10e";
   position: absolute;
-  font-size: 180px;
+  font-size: 50px;
   line-height: 1em;
   color: #7e6c6c;
   font-style: normal;
-  content: "\201D";
   right: 20px;
-  bottom: -105px;
+  bottom: -0;
+  z-index: 999;
 }
 
 .review-carousel.owl-carousel .owl-dots
@@ -913,22 +971,6 @@ AIDEA Home
 <section id="banner">
     <div class="swiper mySwiper banner-swiper">
         <div class="swiper-wrapper">
-            <!-- <div class="swiper-slide">
-                <img src="images/banner (1).jpg" class="d-none d-md-block" />
-                <img src="images/banner-m (1).jpg" class="d-block d-md-none" />
-                <div class="banner-floating-content">
-                    <h1>We Design & Build<br>Offices & Workspaces</h1>
-                    <span>Transforming offices into productive & inspiring spaces</span>
-                    <div class="banner-btn-row">
-                        <a href="#product" class="linkProduct-btn linkProduct-btn1" style="text-decoration: none;">
-                                Shop Now
-                        </a>
-                        <a href="#product" class="linkProduct-btn linkProduct-btn2" style="text-decoration: none;">
-                                Enquiry More
-                        </a>
-                    </div>
-                </div>
-            </div> -->
             @if(isset($banners))
                 @foreach($banners as $banner)
                 <div class="swiper-slide">
@@ -957,29 +999,6 @@ AIDEA Home
 <section id="product">
     <div class="container-custom">
         <div class="product-carousel owl-carousel owl-theme">
-            <!-- <div class="item">
-               <div class="product-frame">
-                    <div class="product-image">
-                        <div class="overlay project-content-box">
-                            <div class="content-container">
-                                <div class="d-flex" style="justify-content:center;">
-                                    <div class="more-img-btn" onclick="openModal(1);"><i
-                                            class="fa fa-ellipsis-h fa-icon"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="images/project/product-cover.jpg" alt="Product 1">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">DESIGN NO. 03- 1000SF APARTMENT</div>
-                        <div class="product-price">RM 500</div>
-                        <div class="d-flex">
-                            <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product1">Read More <i class="fa fa-info-circle"></i></button>
-                            <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-               </div> 
-            </div> -->
             @if(isset($products))
                 @foreach($products as $index => $product)
                 <div class="item">
@@ -998,10 +1017,10 @@ AIDEA Home
                         <div class="product-content">
                             <div class="product-title">{{ $product->Name }}</div>
                             @if($product->PromotionPrice == 0)
-                                <div class="product-price">{{ $product->Price }}</div>
+                                <div class="product-price">RM {{ $product->Price }}</div>
                             @else
                                 <div class="d-flex">
-                                    <div class="product-price promotion">{{ $product->Price }}</div>
+                                    <div class="product-price promotion">RM {{ $product->Price }}</div>
                                     <div class="product-price"><i class="fa fa-arrow-right" aria-hidden="true" style="margin: 0 10px;"></i>{{ $product->PromotionPrice }}</div>
                                 </div>
                             @endif
@@ -1016,89 +1035,18 @@ AIDEA Home
             @endif
         </div>
     </div>
-            
-            <!-- <div class="item">
-                <div class="product-frame">
-                    <div class="product-image">
-                        <div class="overlay project-content-box">
-                            <div class="content-container">
-                                <div class="d-flex" style="justify-content:center;">
-                                    <div class="more-img-btn" onclick="openModal(2);"><i
-                                            class="fa fa-ellipsis-h fa-icon"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="images/project/simpleTest.jpg" alt="Product 1">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title"><h3>Title 2</h3></div>
-                        <div class="product-price">RM 3,888</div>
-                        <div class="d-flex">
-                            <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product2">Read More <i class="fa fa-info-circle"></i></button>
-                            <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-            <div class="item">
-               <div class="product-frame">
-                    <div class="product-image">
-                        <img src="images/project/simpleTest.jpg" alt="Product 1">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title"><h3>Title 3</h3></div>
-                        <div class="product-price">RM 888</div>
-                        <div class="d-flex">
-                            <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product2">Read More <i class="fa fa-info-circle"></i></button>
-                            <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-               </div> 
-            </div>
-            <div class="item">
-               <div class="product-frame">
-                    <div class="product-image">
-                        <img src="images/project/simpleTest.jpg" alt="Product 1">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title"><h3>Title 4</h3></div>
-                        <div class="product-price">RM 888</div>
-                        <div class="d-flex">
-                            <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product2">Read More <i class="fa fa-info-circle"></i></button>
-                            <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-               </div> 
-            </div>
-            <div class="item">
-               <div class="product-frame">
-                    <div class="product-image">
-                        <img src="images/project/simpleTest.jpg" alt="Product 1">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title"><h3>Title 5</h3></div>
-                        <div class="product-price">RM 888</div>
-                        <div class="d-flex">
-                            <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product2">Read More <i class="fa fa-info-circle"></i></button>
-                            <button class="purchase-btn btn btn-buy">Click to buy <i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-               </div> 
-            </div>
-        </div>
-    </div> -->
 
     <div class="container-custom hot-sales">
         <div class="row">
-        @if(isset($hotsale))
-            <div class="col-md-4 promo-content-center">
+        @if(isset($hotsale) && isset($hotsale[0]))
+            <div class="col-md-12 col-lg-4 promo-content-center">
                 <div class="promo-content-container">
                     <h1 class="promo-word">HOT</h1>
                     <br>
                     <h1 class="promo-word-2"><span class="space-pro"></span>SALES</h1>
                 </div>
             </div>
-            <div class="col-md-4" style="padding: 10px;">
+            <div class="col-md-12 col-lg-4" style="padding: 10px;">
                 <div class="item">  
                     <div class="product-frame">
                         <div class="product-image">
@@ -1130,21 +1078,7 @@ AIDEA Home
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 promo-content-center2">
-                <!-- <ul style="list-style-type: none;">
-                    <li style="color: green;">&#x2713;</li>
-                    <li style="color: green;">&#x2713;</li>
-                    <li style="color: green;">&#x2713;</li>
-                    <li style="color: green;">&#x2713;</li>
-                    <li style="color: green;">&#x2713;</li>
-                </ul>
-                <ul class="promo-list-content">
-                    <li>Good</li>
-                    <li>Excellent</li>
-                    <li>This product is of the highest quality.</li>
-                    <li>The craftsmanship on this product is top-notch.</li>
-                    <li>The quality of materials used is superior.</li>
-                </ul> -->
+            <div class="col-md-12 col-lg-4 promo-content-center2">
                 <div class="promo-list-content">
                     <div class="tick">
                         &#x2713;
@@ -1226,7 +1160,7 @@ AIDEA Home
     @endforeach
 @endif
 
-@if(isset($hotsale))
+@if(isset($hotsale) && isset($hotsale[0]))
 <div id="lightbox-modal{{ $hotsale[0]->ProductID }}" class="modalImg">
     <span class="close cursor" onclick="closeModal({{ $hotsale[0]->ProductID }})">&times;</span>
     <div class="modal-img-content">
@@ -1412,6 +1346,7 @@ AIDEA Home
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
 <script type="text/javascript">
+
 $('.product-carousel').owlCarousel({
     loop:true,
     margin:10,
