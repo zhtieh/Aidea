@@ -1020,7 +1020,7 @@ AIDEA Home
                                 <div class="product-price">RM {{ $product->Price }}</div>
                             @else
                                 <div class="d-flex">
-                                    <div class="product-price promotion">RM {{ $product->Price }}</div>
+                                    <div class="product-price" style="display: flex;">RM <div class="promotion">{{ $product->Price }}</div></div>
                                     <div class="product-price"><i class="fa fa-arrow-right" aria-hidden="true" style="margin: 0 10px;"></i>{{ $product->PromotionPrice }}</div>
                                 </div>
                             @endif
@@ -1066,7 +1066,7 @@ AIDEA Home
                                 <div class="product-price">RM {{ $hotsale[0]->Price }}</div>
                             @else
                                 <div class="d-flex">
-                                    <div class="product-price promotion">RM {{ $hotsale[0]->Price }}</div>
+                                    <div class="product-price" style="display: flex;">RM <div class="promotion">{{ $hotsale[0]->Price }}</div></div>
                                     <div class="product-price"><i class="fa fa-arrow-right" aria-hidden="true" style="margin: 0 10px;"></i>{{ $hotsale[0]->PromotionPrice }}</div>
                                 </div>
                             @endif
