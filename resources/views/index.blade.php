@@ -662,6 +662,7 @@ AIDEA Home
     font-size: 1.45rem;
     font-weight: 500;
     line-height: 32.5px;
+    color: #775841;
     letter-spacing: normal;   
 }
 
@@ -1204,7 +1205,7 @@ AIDEA Home
 <section id="about">
     <div class="container">
         <div class="row" style="justify-content: center;">
-            <h1 style="text-align: center;">About Us</h1>
+            <h1 style="text-align: center; color: #775841;">About Us</h1>
         </div>
         <div class="row py-5">
             <div class="col-12 col-md-4 about-col-left">

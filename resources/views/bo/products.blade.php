@@ -123,13 +123,13 @@
 					<tr>
 						<th scope="col">Price(RM):</th>
 						<td>
-							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00">
+							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00" step="0.01">
 						</td>
 					</tr>
           <tr>
             <th scope="col">Promotion Price(RM):</th>
             <td>
-              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00">
+              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00" step="0.01">
             </td>
           </tr>
 					<tr>
