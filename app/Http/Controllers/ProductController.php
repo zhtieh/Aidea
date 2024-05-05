@@ -78,7 +78,7 @@ class ProductController extends Controller
         {
             $products = DB::select("SELECT p.ProductGUID, p.Name, p.Description, p.PromotionPrice, p.Price, p.Quantity, p.Sold, IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL,
 											IFNULL(p.Photo1URL,'') AS Photo1URL, IFNULL(p.Photo2URL,'') AS Photo2URL, IFNULL(p.Photo3URL,'') AS Photo3URL, 
-                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
+                                            IFNULL(p.Photo4URL, '') AS Photo4URL, IFNULL(p.Photo5URL, '') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL, IFNULL(p.File1URL,'') AS File1URL, IFNULL(p.File2URL,'') AS File2URL, IFNULL(p.File3URL,'') AS File3URL, IFNULL(p.File4URL,'') AS File4URL
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ?
                                 LIMIT 1;",[$productGUID]);
@@ -104,7 +104,12 @@ class ProductController extends Controller
             $ProductPhoto4URL = "";
             $ProductPhoto5URL = "";
             $FileURL = "";
+            $File1URL = "";
+            $File2URL = "";
+            $File3URL = "";
+            $File4URL = "";
             $count = 0;
+            $fileCount = 0;
 
             if($request->hasFile('UploadCoverImage'))
             {
@@ -149,17 +154,50 @@ class ProductController extends Controller
 
             if($request->hasFile('ProductFile'))
             {
-                $file = $request->file('ProductFile');
-                $name = $file->getClientOriginalName();
-                $extension = explode('.', $name);
-                $fileName = $request['ProductGUID'] ."_File.".end($extension);
-                $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+                $fileReverse = array_reverse($request->file('ProductFile'));
+                foreach($fileReverse as $file)
+                {
+                    $fileName = $file->getClientOriginalName();
+                    $gFileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$request['ProductGUID']."/".$fileName;
+                    Storage::disk('hostinger')->put('Product/File/'.$request['ProductGUID']."/".$fileName, fopen($file, 'r+'));
+                    if($fileCount == 0)
+                   {
+                        $FileURL = $gFileURL;
+                   }
+                   else if($fileCount == 1)
+                   {
+                        $File1URL = $gFileURL;
+                   }
+                   else if($fileCount == 2)
+                   {
+                        $File2URL = $gFileURL;
+                   }
+                   else if($fileCount == 3)
+                   {
+                        $File3URL = $gFileURL;
+                   }
+                   else
+                   {
+                        $File4URL = $gFileURL;
+                   }
 
-                Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+                   $fileCount++;
+                }
             }
 
-            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,PromotionPrice,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,Photo5URL,FileURL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['PromoPrice'],$request['Price'],$request['Quantity'],
-                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL]);
+            // if($request->hasFile('ProductFile'))
+            // {
+            //     $file = $request->file('ProductFile');
+            //     $name = $file->getClientOriginalName();
+            //     $extension = explode('.', $name);
+            //     $fileName = $request['ProductGUID'] ."_File.".end($extension);
+            //     $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+
+            //     Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+            // }
+
+            DB::insert("INSERT INTO u859417454_Aidea.Product (ProductGUID,Name,Description,PromotionPrice,Price,Quantity,CoverPhotoURL,Photo1URL,Photo2URL,Photo3URL,Photo4URL,Photo5URL,FileURL,File1URL,File2URL,File3URL,File4URL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);", [$request['ProductGUID'],$request['Name'],$request['Description'],$request['PromoPrice'],$request['Price'],$request['Quantity'],
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL,$File1URL,$File2URL,$File3URL,$File4URL]);
 
             return json_encode(['status' => 1]);
         }
@@ -175,10 +213,8 @@ class ProductController extends Controller
     {
         try
         {
-            Log::debug($request);
-
             $product = DB::select("SELECT IFNULL(p.CoverPhotoURL,'') AS CoverPhotoURL, IFNULL(p.Photo1URL,'') AS Photo1URL , IFNULL(p.Photo2URL,'') AS Photo2URL, 
-                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.Photo5URL,'') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL
+                                    IFNULL(p.Photo3URL,'') AS Photo3URL, IFNULL(p.Photo4URL,'') AS Photo4URL, IFNULL(p.Photo5URL,'') AS Photo5URL, IFNULL(p.FileURL,'') AS FileURL, IFNULL(p.File1URL,'') AS File1URL, IFNULL(p.File2URL,'') AS File2URL, IFNULL(p.File3URL,'') AS File3URL, IFNULL(p.File4URL,'') AS File4URL
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ? LIMIT 1;", [$request['ProductGUID']]);
 
@@ -189,7 +225,12 @@ class ProductController extends Controller
             $ProductPhoto4URL = $product[0]->Photo4URL;
             $ProductPhoto5URL = $product[0]->Photo5URL;
             $FileURL = $product[0]->FileURL;
+            $File1URL = $product[0]->File1URL;
+            $File2URL = $product[0]->File2URL;
+            $File3URL = $product[0]->File3URL;
+            $File4URL = $product[0]->File4URL;
             $count = 0;
+            $fileCount = 0;
 
             if($request['CoverAction'] == "Yes")
             {
@@ -280,33 +321,77 @@ class ProductController extends Controller
 
             if($request['FileAction'] == "Yes")
             {
-                DB::insert("UPDATE u859417454_Aidea.Product SET FileURL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
+                DB::insert("UPDATE u859417454_Aidea.Product SET FileURL = '', File1URL = '', File2URL = '', File3URL = '', File4URL = '' WHERE ProductGUID = ?;",[$request['ProductGUID']]);
 
-                $FileNameArray = explode("/",$FileURL);
-                $FileName = end($FileNameArray);
+                $FileURL = "";
+                $File1URL = "";
+                $File2URL = "";
+                $File3URL = "";
+                $File4URL = "";
 
-                if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
+                if(Storage::disk('hostinger')->exists("Product/File/".$request['ProductGUID']))
                 {
-                    Storage::disk('hostinger')->delete('Product/File/'.$FileName);
+                   Storage::disk('hostinger')->delete("Product/File/".$request['ProductGUID']);
                 }
-
-                $FileURL = '';
 
                 if($request->hasFile('ProductFile'))
                 {
-                    $file = $request->file('ProductFile');
-                    $name = $file->getClientOriginalName();
-                    $extension = explode('.', $name);
-                    $fileName = $request['ProductGUID'] ."_File.".end($extension);
-                    $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+                    $fileReverse = array_reverse($request->file('ProductFile'));
+                    foreach($fileReverse as $file)
+                    {
+                        $fileName = $file->getClientOriginalName();
+                        $gFileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$request['ProductGUID']."/".$fileName;
+                        Storage::disk('hostinger')->put('Product/File/'.$request['ProductGUID']."/".$fileName, fopen($file, 'r+'));
+                        if($fileCount == 0)
+                       {
+                            $FileURL = $gFileURL;
+                       }
+                       else if($fileCount == 1)
+                       {
+                            $File1URL = $gFileURL;
+                       }
+                       else if($fileCount == 2)
+                       {
+                            $File2URL = $gFileURL;
+                       }
+                       else if($fileCount == 3)
+                       {
+                            $File3URL = $gFileURL;
+                       }
+                       else
+                       {
+                            $File4URL = $gFileURL;
+                       }
 
-                    Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+                       $fileCount++;
+                    }
                 }
+
+                // $FileNameArray = explode("/",$FileURL);
+                // $FileName = end($FileNameArray);
+
+                // if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
+                // {
+                //     Storage::disk('hostinger')->delete('Product/File/'.$FileName);
+                // }
+
+                // $FileURL = '';
+
+                // if($request->hasFile('ProductFile'))
+                // {
+                //     $file = $request->file('ProductFile');
+                //     $name = $file->getClientOriginalName();
+                //     $extension = explode('.', $name);
+                //     $fileName = $request['ProductGUID'] ."_File.".end($extension);
+                //     $FileURL = "https://images.vanguardbuffle.com/Aidea/Product/File/".$fileName;
+
+                //     Storage::disk('hostinger')->put('Product/File/'.$fileName, fopen($request->file('ProductFile'), 'r+'));
+                // }
             }
 
-            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, PromotionPrice = ?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,Photo5URL = ?,FileURL = ?
+            DB::insert("UPDATE u859417454_Aidea.Product SET Name = ?, Description =?, PromotionPrice = ?, Price = ?, Quantity = ?, CoverPhotoURL = ?, Photo1URL = ?, Photo2URL = ?, Photo3URL =?,Photo4URL = ?,Photo5URL = ?,FileURL = ?,File1URL = ?,File2URL = ?,File3URL = ?,File4URL = ?
                 WHERE ProductGUID = ?;", [$request['Name'],$request['Description'],$request['PromoPrice'],$request['Price'],$request['Quantity'],
-                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL,$request['ProductGUID']]);
+                $CoverPhotoURL,$ProductPhoto1URL,$ProductPhoto2URL,$ProductPhoto3URL,$ProductPhoto4URL,$ProductPhoto5URL,$FileURL,$File1URL,$File2URL,$File3URL,$File4URL,$request['ProductGUID']]);
 
             return json_encode(['status' => 1]);
         }
@@ -350,12 +435,8 @@ class ProductController extends Controller
                 Storage::disk('hostinger')->delete('Product/Cover/'.$CoverFileName);
             }
 
-            Log::debug($Photo1FileName);
-            Log::debug(Storage::disk('hostinger')->exists('Product/'.$Photo1FileName) ? "true" : "false");
-
             if($Photo1FileName != "" && Storage::disk('hostinger')->exists('Product/'.$Photo1FileName))
             {
-                Log::debug($Photo1FileName);
                 Storage::disk('hostinger')->delete('Product/'.$Photo1FileName);
             }
 
@@ -378,10 +459,11 @@ class ProductController extends Controller
                 Storage::disk('hostinger')->delete('Product/'.$Photo5FileName);
             }
 
-            if($FileName != "" && Storage::disk('hostinger')->exists('Product/File/'.$FileName))
+            Log::debug(Storage::disk('hostinger')->exists('Product/File/'.$pGUID));
+
+            if(Storage::disk('hostinger')->exists('Product/File/'.$pGUID))
             {
-                Log::debug($FileName);
-                Storage::disk('hostinger')->delete('Product/File/'.$FileName);
+                Storage::disk('hostinger')->deleteDirectory('Product/File/'.$pGUID);
             }
 
             DB::delete("DELETE FROM u859417454_Aidea.Product WHERE ProductGUID = ?;", [$pGUID]);

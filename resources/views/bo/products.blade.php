@@ -123,13 +123,13 @@
 					<tr>
 						<th scope="col">Price(RM):</th>
 						<td>
-							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00" step="0.01">
+							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00">
 						</td>
 					</tr>
           <tr>
             <th scope="col">Promotion Price(RM):</th>
             <td>
-              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00" step="0.01">
+              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00">
             </td>
           </tr>
 					<tr>
@@ -154,15 +154,16 @@
 	                	<td>
 	                		<input type="hidden" name="PhotoAction" id="PhotoAction" value="No">
 	                		<input class="form-control" type="file" id="image-upload" accept="image/*" name="UploadProductPhotoImage[]" multiple>
-        					<div id="preview-container"></div>
+        					     <div id="preview-container"></div>
 	                	</td>
 	                </tr>
 	                <tr>
 	                    <th scope="col">File:</th>
 	                    <td>
 	                    	<input type="hidden" name="FileAction" id="FileAction" value="No" >
-	                    	<a href="#" id="ProductFileLink" target="_blank" style="display:none;"></a>
-	                    	<input type="file" class="form-control" id="ProductFile" name="ProductFile">
+	                    	<input type="file" class="form-control" id="ProductFile" name="ProductFile[]" multiple>
+                        <div id="preview-fileLink" class="preiview-fileContainer">
+                        </div>
 	                    </td>
 	                </tr>
 	                <tr>
@@ -199,6 +200,8 @@
   <script type="text/javascript">
   	const input = document.getElementById('image-upload');
     const previewContainer = document.getElementById('preview-container');
+     const fileInput = document.getElementById('ProductFile');
+    const previewFileContainer = document.getElementById('preview-fileLink');
 
     $(document).ready(function(){
         input.addEventListener('change', function () {
@@ -221,6 +224,17 @@
                 });
             }
         });
+
+        fileInput.addEventListener('change', (event) => {
+          previewFileContainer.innerHTML = ''; // Clear previous preview
+
+          for (const file of fileInput.files) {
+            const fileNameElement = document.createElement('div');
+            fileNameElement.classList.add('file-name');
+            fileNameElement.textContent = file.name;
+            previewFileContainer.appendChild(fileNameElement);
+          }
+      });
 
         $(".actionDelete").click(function(){
       	console.log($(this).attr('data-guid'));
@@ -272,6 +286,7 @@
           },
           success: function(response){
           	var data = JSON.parse(response);
+            console.log(data);
             LoadProductDetails(data.product);
           }
         });
@@ -284,6 +299,7 @@
       	$('#ModalProductGUID').val(details.ProductGUID);
       	$('#ModalProductName').val(details.Name);
       	$('#ModalProductDescription').val(details.Description);
+        $('#ModalPromoPrice').val(details.PromotionPrice);
       	$('#ModalProductPrice').val(details.Price);
       	$('#ModalProductQuantity').val(details.Quantity);
       	if(details.CoverPhotoURL != '')
@@ -333,12 +349,52 @@
             previewContainer.appendChild(img);
         }
 
+        previewFileContainer.innerHTML = '';
+
       	if(details.FileURL != '')
       	{
-      		$('#ProductFileLink').attr('href', details.FileURL);
-      		$('#ProductFileLink').html((details.FileURL.split("/")).slice(-1));
-      		$('#ProductFileLink').css('display','block');
+          var a = document.createElement('a');
+          a.href = details.FileURL;
+          a.innerHTML = (details.FileURL.split("/")).slice(-1);
+          a.target = "_blank";
+          previewFileContainer.appendChild(a);
       	}
+
+        if(details.File1URL != '')
+        {
+          var a = document.createElement('a');
+          a.href = details.File1URL;
+          a.innerHTML = (details.File1URL.split("/")).slice(-1);
+          a.target = "_blank";
+          previewFileContainer.appendChild(a);
+        }
+
+        if(details.File2URL != '')
+        {
+          var a = document.createElement('a');
+          a.href = details.Fil2eURL;
+          a.innerHTML = (details.File2URL.split("/")).slice(-1);
+          a.target = "_blank";
+          previewFileContainer.appendChild(a);
+        }
+
+        if(details.File3URL != '')
+        {
+          var a = document.createElement('a');
+          a.href = details.FileURL;
+          a.innerHTML = (details.File3URL.split("/")).slice(-1);
+          a.target = "_blank";
+          previewFileContainer.appendChild(a);
+        }
+
+        if(details.File4URL != '')
+        {
+          var a = document.createElement('a');
+          a.href = details.File4URL;
+          a.innerHTML = (details.File4URL.split("/")).slice(-1);
+          a.target = "_blank";
+          previewFileContainer.appendChild(a);
+        }
       }
 
       function ClearForm()
