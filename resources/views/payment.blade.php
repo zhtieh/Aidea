@@ -145,7 +145,7 @@ $currentURL = url()->current();
 <body>
 <div class="container">
     <div class="row header-row">
-        <img src="{{ asset('images/AIDEA_DESIGN_SOLUTIONS__1__logo.png') }}" class="logo-img"alt="Aidea Group Logo">
+        <img src="{{ asset('img/AIDEA_DESIGN_SOLUTIONS__1__logo.png') }}" class="logo-img"alt="Aidea Group Logo">
         <h1 class="payment-pg-title">Payment Detail</h1>
     </div>
 </div>
@@ -192,7 +192,7 @@ $currentURL = url()->current();
                             <div class="col-6" style="text-align: right;" id="Subtotal">RM0.00</div>
                         </div>
 
-                        <div class="form-check">
+                        <!-- <div class="form-check">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="payment1" value="eWallet" checked>
                                 <label class="form-check-label" for="payment1">
                                     Bayar Guna TnG E-wallet / Grab-Pay
@@ -208,10 +208,9 @@ $currentURL = url()->current();
                             <input class="form-check-input" type="radio" name="exampleRadios" id="payment3" value="debitCredit">
                                 <label class="form-check-label" for="payment3">
                                     Bayar Guna Kad Kredit atau Kad Debit
-                                    <!-- <br> -->
                                     <img src="{{ asset('images/payment/card.png') }}" width="100px" alt="card" style="margin-left: 15px;">
                                 </label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
