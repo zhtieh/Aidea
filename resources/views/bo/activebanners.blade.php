@@ -48,12 +48,12 @@
 											    			</td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Banner</th>
+												    		<th scope="col">Banner (1920(w) x 1080(h))</th>
 												    		<td><img src="{{ $banners[0]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner1Img">
 												      		<input class="form-control" type="file" id="UploadBanner1Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner1Img');" name="UploadBannerImage" data-id="Banner1Img"></td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Mobile Banner</th>
+												    		<th scope="col">Mobile Banner (4500(w) x 900(h))</th>
 												    		<td><img src="{{ $banners[0]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner1Img">
 												      		<input class="form-control" type="file" id="UploadMobileBanner1Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner1Img');" name="UploadMobileBannerImage" data-id="MobileBanner1Img"></td>
 												    </tr>
@@ -93,12 +93,12 @@
 											    			</td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Banner</th>
+												    		<th scope="col">Banner (1920(w) x 1080(h))</th></th>
 												    		<td><img src="{{ $banners[1]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner2Img">
 												      		<input class="form-control" type="file" id="UploadBanner2Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner2Img');" name="UploadBannerImage" data-id="Banner2Img"></td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Mobile Banner</th>
+												    		<th scope="col">Mobile Banner (4500(w) x 900(h))</th>
 												    		<td><img src="{{ $banners[1]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner2Img">
 												      		<input class="form-control" type="file" id="UploadMobileBanner2Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner2Img');" name="UploadMobileBannerImage" data-id="MobileBanner2Img"></td>
 												    </tr>
@@ -138,12 +138,12 @@
 											    			</td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Banner</th>
+												    		<th scope="col">Banner (1920(w) x 1080(h))</th></th>
 												    		<td><img src="{{ $banners[2]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner3Img">
 												      		<input class="form-control" type="file" id="UploadBanner3Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner3Img');" name="UploadBannerImage" data-id="Banner3Img"></td>
 												    </tr>
 												    <tr>
-												    		<th scope="col">Mobile Banner</th>
+												    		<th scope="col">Mobile Banner (4500(w) x 900(h))</th>
 												    		<td><img src="{{ $banners[2]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner3Img">
 												      		<input class="form-control" type="file" id="UploadMobileBanner3Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner3Img');" name="UploadMobileBannerImage" data-id="MobileBanner3Img"></td>
 												    </tr>
@@ -183,12 +183,12 @@
 										</td>
 								</tr>
 								<tr>
-										<th scope="col">Banner</th>
+										<th scope="col">Banner (1920(w) x 1080(h))</th></th>
 										<td><img src="{{ $banners[3]->BannerURL }}?v={{ time() }}" style="width:300px; height: 200px;" class="mb-2" id="Banner4Img">
 										<input class="form-control" type="file" id="UploadBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'Banner4Img');" name="UploadBannerImage" data-id="Banner4Img"></td>
 								</tr>
 								<tr>
-										<th scope="col">Mobile Banner</th>
+										<th scope="col">Mobile Banner (4500(w) x 900(h))</th>
 										<td><img src="{{ $banners[3]->MobileBannerURL }}?v={{ time() }}" style="width:200px; height: 250px;" class="mb-2" id="MobileBanner4Img">
 										<input class="form-control" type="file" id="UploadMobileBanner4Image" accept="image/png, image/jpeg" onchange="readBannerURL(this,'MobileBanner4Img');" name="UploadMobileBannerImage" data-id="MobileBanner4Img"></td>
 								</tr>
