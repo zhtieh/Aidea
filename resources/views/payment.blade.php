@@ -151,6 +151,7 @@ $currentURL = url()->current();
 </div>
 <div class="container payment-container">
     <form action="https://app.senangpay.my/payment/294171328165594" method="POST" id="payment-form" class="pay-form">
+    <form action="" method="POST" id="payment-form" class="pay-form">
         <div class="row">    
             <div class="col-12 col-md-6">
                 <input type="hidden" id="ProductGUID" name="ProductGUID" value="">
@@ -245,11 +246,11 @@ $currentURL = url()->current();
             {
                 LoadProductDetails(data.product[0]);
             }
-            // else
-            // {
-            //     alert("Invalid Product");
-            //     window.location.href = window.location.origin;
-            // }
+            else
+            {
+                alert("Invalid Product");
+                window.location.href = window.location.origin;
+            }
           },
           error: function(e)
           {
@@ -270,20 +271,79 @@ $currentURL = url()->current();
     {
         e.preventDefault();
         var formData = new FormData(this);
-        // $.ajax({
-        //   url:"{{ route('CreatePayment') }}",
-        //   method: 'POST',
-        //   data: formData,
-        //   processData: false,
-        //   contentType: false,
-        //   headers: {
-        //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //   },
-        //   success: function(response){
-        //     console.log(response);
-        //   }
-        // })
+        $.ajax({
+          url:"{{ route('CreatePayment') }}",
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(response){
+            console.log(response);
+            var res = JSON.parse(response);
+            ProceedPayment(res);
+          },
+          error: function(e)
+          {
+            alert("Fail to proceed");
+            window.location.href = window.location.origin;
+          }
+        })
     })
+
+    function ProceedPayment(res)
+    {
+         var form = $('<form>', {
+            'action': 'https://sandbox.senangpay.my/payment/555171357717256',
+            'method': 'GET'
+        });
+
+        // Add hidden input fields for POST data
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'detail',
+            'value': res.data.detail
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'amount',
+            'value': res.data.amount
+        }));
+
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'order_id',
+            'value': res.data.order_id
+        }));
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'name',
+            'value': res.data.name
+        }));
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'email',
+            'value': res.data.email
+        }));
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'phone',
+            'value': res.data.phone
+        }));
+        form.append($('<input>', {
+            'type': 'hidden',
+            'name': 'hash',
+            'value': res.signature
+        }));
+
+        // Append the form to the body and submit
+        $('body').append(form);
+        form.submit();
+        form.remove();
+    }
 
      function uuidv4() { 
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
