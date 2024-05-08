@@ -79,6 +79,22 @@ h6 {
     width: 100%;
 }
 
+@font-face
+{
+    font-family: 'RussoOne Regular';
+    src: url('../fonts/RussoOne-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Inter';
+    src: url('../fonts/Inter-VariableFont_slnt,wght.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @media(min-width: 768px)
 {
     .container
@@ -902,8 +918,8 @@ section,
 {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  width: 1600px;
+  transform: translateY(-50%) !important;
+  width: 1500px;
   display: grid;
 }
 
@@ -912,7 +928,7 @@ section,
   color: #fff;
   font-family: 'Questrial', sans-serif;
   text-transform: capitalize;
-  font-size: 3.438rem;
+  font-size: 3rem;
   line-height: 65px;
   font-weight: 400;
 }
@@ -951,7 +967,7 @@ section,
 
 .linkProduct-btn1
 {
-  background: linear-gradient(to right, #b93737, #cdce2d);
+  background: #c48c31;
   margin-right: 20px;
 }
 
@@ -963,6 +979,14 @@ section,
 .linkProduct-btn2
 {
   margin-left: 20px;
+}
+
+@media(max-width: 1600px)
+{
+  .banner-floating-content
+  {
+    width: 1200px;
+  }
 }
 
 @media(max-width: 1440px)
@@ -977,7 +1001,12 @@ section,
 {
     .banner-floating-content
     {
-        width: 1000px;
+        width: 960px;
+    }
+
+    .banner-floating-content h1
+    {
+      font-size: 2.75rem;
     }
 }
 
@@ -986,6 +1015,11 @@ section,
     .banner-floating-content
     {
         width: 800px;
+    }
+
+    .banner-floating-content h1
+    {
+      font-size: 2.5rem;
     }
 
     .linkProduct-btn
@@ -1000,12 +1034,17 @@ section,
   {
       width: 500px;
   }
+
+  .banner-floating-content h1
+  {
+    line-height: 52px;
+  }
 }
 
 @media(max-width: 576px)
 {
     .banner-floating-content {
-        width: 350px;
+        width: 340px;
     }
 
     .banner-btn-row
@@ -1015,7 +1054,7 @@ section,
 
     .banner-floating-content h1
     {
-        font-size: 3.2rem;
+        font-size: 2rem;
     }
 
     .banner-floating-content span
@@ -1041,11 +1080,11 @@ section,
 @media(max-width: 340px)
 {
   .banner-floating-content {
-    width: 320px;
+    width: 300px;
   }
 
   .banner-floating-content h1 {
-    font-size: 2.6rem;
+    font-size: 1.85rem;
   }
 }
 /*--------------------------------------------------------------
@@ -1138,6 +1177,11 @@ section,
     line-height: 32.5px;
     color: #775841;
     letter-spacing: normal;   
+}
+
+.about-2
+{
+  text-align: center;
 }
 
 @media(max-width: 1200px)
@@ -1341,6 +1385,44 @@ section,
 }
 
 /*--------------------------------------------------------------
+# Sub Banner Section
+--------------------------------------------------------------*/
+.fix-background
+{
+    position: relative;
+    background-image: url(../img/samuel-background-darken1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+
+.extra-container
+{
+    padding: 10rem 0;
+}
+
+.extra-content
+{
+    font-size: 4.5rem;
+    font-family: 'RussoOne Regular';
+    text-align:center;
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.extra-subcontent
+{
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    z-index: 2;
+    position: relative;
+}
+
+/*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
 .services {
@@ -1425,12 +1507,14 @@ section,
 {
     text-align: center;
     color: #fff;
+    font-size: 4.75rem;
 }
 
 .find-content
 {
     text-align: center;
     color: #fff;
+    font-size: 1.5rem;
 }
 
 .btn.find-button
@@ -1653,7 +1737,7 @@ section,
 
 .btn-buy
 {
-    background: linear-gradient(to right, #b93737, #cdce2d);
+    background: #c48c31;
     color: #fff;
     border: 0;
 }
@@ -1742,6 +1826,12 @@ section,
     right: 25px;
     font-size: 35px;
     font-weight: bold;
+}
+
+.modal-close
+{
+  background-color: transparent;
+  border: 0;
 }
 
 .close:hover,

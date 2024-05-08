@@ -50,11 +50,11 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="">LAMAN UTAMA</a></li>
-          <li><a href="#about">TENTANG</a></li>
-          <li><a href="#services">PERKHIDMATAN</a></li>
-          <li><a href="#product">PRODUK</a></li>
-          <li><a href="#testimonials">PENILAIAN</a></li>
+          <li><a href="#hero" class="">HOME</a></li>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#services">SERVICE</a></li>
+          <li><a href="#product">PRODUCT</a></li>
+          <li><a href="#testimonials">REVIEW</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -65,20 +65,6 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section">
-      <!-- <div class="hero-bg">
-        <img src="img/hero-bg-light.webp" alt="">
-      </div>
-      <div class="container text-center">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up" class="">Welcome to <span>QuickStart</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100" class="">Quickly start your project now and set the stage for success<br></p>
-          <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <a href="#about" class="btn-get-started">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
-          </div>
-          <img src="img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
-        </div>
-      </div> -->
         <div class="swiper mySwiper banner-swiper">
             <div class="swiper-wrapper">
                 @if(isset($banners))
@@ -91,10 +77,10 @@
                             <span>{{ $banner->Description }}</span>
                             <div class="banner-btn-row">
                                 <a href="#product" class="linkProduct-btn linkProduct-btn1" style="text-decoration: none;">
-                                        BELI SEKARANG
+                                        SHOP NOW
                                 </a>
                                 <a href="#find-us" class="linkProduct-btn linkProduct-btn2" style="text-decoration: none;">
-                                        PERTANYAAN
+                                        ENQUIRY
                                 </a>
                             </div>
                         </div>
@@ -138,8 +124,8 @@
                                     </div>
                                 @endif
                                 <div class="d-flex">
-                                    <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#product{{ $index + 1 }}">INFORMASI <i class="fa fa-info-circle"></i></button>
-                                    <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $product->ProductGUID }}">BELI SEKARANG <i class="fa fa-shopping-cart"></i></a></button>
+                                    <button class="product-desc-btn btn btn-read-more" data-bs-toggle="modal" data-bs-target="#product{{ $index + 1 }}">INFORMATION <i class="fa fa-info-circle"></i></button>
+                                    <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $product->ProductGUID }}">BUY NOW <i class="fa fa-shopping-cart"></i></a></button>
                                 </div>
                             </div>
                         </div> 
@@ -154,9 +140,9 @@
             @if(isset($hotsale) && isset($hotsale[0]))
                 <div class="col-12 col-lg-4 promo-content-center">
                     <div class="promo-content-container">
-                        <h1 class="promo-word">TERJUAL</h1>
+                        <h1 class="promo-word">HOT</h1>
                         <br>
-                        <h1 class="promo-word-2"><span class="space-pro"></span>HANGAT</h1>
+                        <h1 class="promo-word-2"><span class="space-pro"></span>SALES</h1>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4" style="padding: 10px;">
@@ -184,8 +170,8 @@
                                     </div>
                                 @endif
                                 <div class="d-flex">
-                                    <button class="product-desc-btn btn btn-read-more" data-toggle="modal" data-target="#hotSales1">INFORMASI <i class="fa fa-info-circle"></i></button>
-                                    <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $hotsale[0]->ProductGUID }}">BELI SEKARANG <i class="fa fa-shopping-cart"></i></a></button>
+                                    <button class="product-desc-btn btn btn-read-more" data-bs-toggle="modal" data-bs-target="#hotSales1">INFORMATION <i class="fa fa-info-circle"></i></button>
+                                    <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $hotsale[0]->ProductGUID }}">BUY NOW <i class="fa fa-shopping-cart"></i></a></button>
                                 </div>
                             </div>
                         </div>
@@ -230,12 +216,6 @@
                 <div class="modalFrame">
                     <img src="{{ $product->Photo2URL }}" class="lightbox-img" alt="Image 2">
                 </div>
-                <div class="modalFrame">
-                    <img src="{{ $product->Photo3URL }}" class="lightbox-img" alt="Image 3">
-                </div>
-                <div class="modalFrame">
-                    <img src="{{ $product->Photo4URL }}" class="lightbox-img" alt="Image 4">
-                </div>
             </div>
             <a class="prev" onclick="plusSlides(-1, {{ $index + 1 }})">&#10094;</a>
             <a class="next" onclick="plusSlides(1, {{ $index + 1 }})">&#10095;</a>
@@ -246,7 +226,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     <h5 class="modal-title" id="product{{ $index + 1 }}">{{ $product->Name }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
@@ -254,7 +234,7 @@
                     <p>{{ $product->Description }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -272,12 +252,6 @@
                 <div class="modalFrame">
                     <img src="{{ $hotsale[0]->Photo2URL }}" class="lightbox-img" alt="Image 2">
                 </div>
-                <!-- <div class="modalFrame">
-                    <img src="{{ $hotsale[0]->Photo3URL }}" class="lightbox-img" alt="Image 3">
-                </div>
-                <div class="modalFrame">
-                    <img src="{{ $hotsale[0]->Photo4URL }}" class="lightbox-img" alt="Image 4">
-                </div> -->
             </div>
             <a class="prev" onclick="plusSlides(-1, {{ $hotsale[0]->ProductID }})">&#10094;</a>
             <a class="next" onclick="plusSlides(1, {{ $hotsale[0]->ProductID }})">&#10095;</a>
@@ -288,7 +262,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     <h5 class="modal-title" id="hotSales1">{{ $hotsale[0]->Name }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
@@ -309,7 +283,7 @@
         <div class="container">
 
             <div class="row" style="justify-content: center;" data-aos="fade-up">
-                <h1 style="text-align: center; color: #775841;">About Us</h1>
+                <h1 style="text-align: center; color: #775841; font-weight: bold;">About Us</h1>
             </div>
             <div class="row py-5">
                 <div class="col-12 col-md-4 about-col-left" data-aos="fade-right">
@@ -320,46 +294,36 @@
                 </div>
             </div>
             <div class="row py-5">
-                <div class="col-12 col-md-8 about-col-left order-2 order-md-1" data-aos="fade-right" data-aos-delay="300">
-                    <h3 class="about-desc">IDr. Mohamad Azam Hadi was appointed as the Managing Director of Aidea Group Sdn. Bhd. on May 25, 2009. He graduated with a Diploma in Interior Design from ITM, Shah Alam, and later obtained a Bachelor of Arts (Hons) in Business from the University of Wales, UK. With almost 20 years of experience in Interior Design and Project Management, he began his career path in 1995 with Intext Design Team Sdn. Bhd. as an ID Coordinator. His notable projects included the State Assembly Hall for the Perak State Government and Wisma Putra, Putrajaya (Ministry of Foreign Affairs). In 1999, he supervised the development of the Malacca State Assembly Hall. Subsequently, he joined Probil Industries (M) Sdn. Bhd. in 2000 as the Head of Project and Business Development. In 2005, he became a part of Triumphant Gallery Sdn Bhd, holding the position of Project Director. His significant projects included the ID works of New Istana Syarqiyah, Kuala Terengganu, and ID Works for KLIA2. He is also a Member of the Malaysian Institute of Interior Designers (MIID) and a Registered Interior Designer from the Lembaga Arkitek Malaysia (LAM).</h3>
-                </div>
-                <div class="col-12 col-md-4 about-col-right order-1 order-md-2" data-aos="fade-left">
-                    <img src="img/about/about-2.jpg" class="about-img" alt="about1">
+                <div class="col-12" data-aos="fade-right" data-aos-delay="300">
+                    <h3 class="about-desc about-2">IDr. Mohamad Azam Hadi was appointed as the Managing Director of Aidea Group Sdn. Bhd. on May 25, 2009. He graduated with a Diploma in Interior Design from ITM, Shah Alam, and later obtained a Bachelor of Arts (Hons) in Business from the University of Wales, UK. With almost 20 years of experience in Interior Design and Project Management, he began his career path in 1995 with Intext Design Team Sdn. Bhd. as an ID Coordinator. His notable projects included the State Assembly Hall for the Perak State Government and Wisma Putra, Putrajaya (Ministry of Foreign Affairs). In 1999, he supervised the development of the Malacca State Assembly Hall. Subsequently, he joined Probil Industries (M) Sdn. Bhd. in 2000 as the Head of Project and Business Development. In 2005, he became a part of Triumphant Gallery Sdn Bhd, holding the position of Project Director. His significant projects included the ID works of New Istana Syarqiyah, Kuala Terengganu, and ID Works for KLIA2. He is also a Member of the Malaysian Institute of Interior Designers (MIID) and a Registered Interior Designer from the Lembaga Arkitek Malaysia (LAM).</h3>
                 </div>
             </div>
 
         </div>
     </section><!-- /About Section -->
 
+    <section id="sub-banner" style="padding: 0;">
+        <div class="fix-background">
+            <div class="container">
+                <div class="extra-container">
+                    <h1 class="extra-content">Professional Car Tinted Service</h1>
+                    <h2 class="extra-subcontent">Cool Tint 3S is elevate your drive with precision tinting excellence and build a comfort temperature interior.</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services" class="services section" style="background-color: #cbae8e;">
-
-      <!-- Section Title -->
-      <!-- <div class="container section-title" data-aos="fade-up">
-        <h2>Services</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div> -->
-      <!-- End Section Title -->
 
         <div class="container">
 
             <div class="row mb-5" data-aos="fade-up">
                 <div class="text-center">
-                    <h1>Our Services</h1>
-                    <p class="service-desc">My design philosophy revolves around meeting people's needs, tastes, and satisfaction by constantly evolving and providing dynamic solutions. I draw inspiration from minimalist, elegant, and modern contemporary concepts. Influenced by architects like Frank Lloyd Wright, Philippe Starck, Le Corbusier, and Zaha Hadid, I aim to create timeless designs that are warm, inviting, luxurious, and comfortable, reflecting the essence of each client." - IDr. Azam Hadi</p>
+                    <h1 style="color: #775841; font-weight: bold;">Our Services</h1>
                 </div>
             </div>
-            <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-item item-cyan position-relative">
-                <i class="bi bi-activity icon"></i>
-                <div>
-                    <h3>Nesciunt Mete</h3>
-                    <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis tempore et consequatur.</p>
-                    <a href="service-details.html" class="read-more stretched-link">Learn More <i class="bi bi-arrow-right"></i></a>
-                </div>
-                </div>
-            </div> -->
-            <!-- End Service Item -->
+
             <div class="row mt-5">
                 <div class="col-12 col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-info-wrap">
@@ -382,7 +346,7 @@
                         <img src="img/service/CERTIFIED_CONTRACTOR.png" alt="service 3">
                         <p style="color: #775841;"><b>CERTIFIED CONTRACTOR</b></p>
 
-                        <span style="color: #775841;">We are honored to be officially registered with CIDB, holding the esteemed PKK G4 certification, and proudly certified by MOF, showcasing our dedication to upholding exemplary standards while fostering trust and reliability in every facet of our operations.</span>
+                        <span style="color: #775841;">We are honored to be officially registered with CIDB, holding the esteemed PKK G4 certification, and certified by MOF, showcasing our dedication to upholding exemplary standards while fostering trust and reliability in every facet of our operations.</span>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-md-3" data-aos="fade-up" data-aos-delay="800">
@@ -409,7 +373,7 @@
             <div class="container" style="text-align: center; position: relative; z-index: 3;" data-aos="zoom-out-up">
                 <h2 class="find-title">Our Mission</h2>
                 <p class="find-content">To ensure client satisfaction and always provide the best ideas, solutions, and quality.</p>
-                <a href="https://api.whatsapp.com/send?phone=601128289731" target="_blank">
+                <a href="https://api.whatsapp.com/send?phone=60196554800" target="_blank">
                     <button class="btn find-button">FIND US NOW</button>
                 </a>
             </div>
@@ -558,7 +522,7 @@
     </div>
 
     <div class="footer-license">
-        ©AIDEA DESIGN SOLUTION SDN BHD | CREATED BY VANGUARD BUFFLE
+        ©AIDEA GROUP SDN BHD | CREATED BY VANGUARD BUFFLE
     </div>
   </main>
 

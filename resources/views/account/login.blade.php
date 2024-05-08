@@ -16,15 +16,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, rgba(250,194,24,1) 51%, rgba(248,111,21,1) 93%);
+            background: #cbae8e;
+        }
+
+        .img-fluid
+        {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .btn-login
+        {
+            color: #fff;
+            background: #cbae8e;
+        }
+
+        .btn-login:hover, .btn-login:active
+        {
+            color: #fff;
+            background: #89735e;
         }
     </style>
 </head>
 <body>
 	<div class="col-md-8 col-lg-5 col-xl-4">
-        <div class="card" style="background: #E7E3DD; border: 1px solid #435861;">
+        <div class="card" style="background: #E7E3DD;">
             <div class="card-body text-center">
-                <img src="../../images/logo/logo.png" class="img-fluid">
+                <img src="../../img/AIDEA_DESIGN_SOLUTIONS__1__logo.png" class="img-fluid">
                 <form action="{{ route('authenticate') }}" method="post" class="mt-3" >
                     @csrf
                     <div class="mb-3 row">
@@ -47,7 +65,7 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-3 offset-md-7">
-                            <input type="submit" class="btn btn-dark w-100" value="Login">
+                            <input type="submit" class="btn btn-login w-100" value="Login">
                         </div>
                     </div>
                     
