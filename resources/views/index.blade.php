@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="container-custom hot-sales" data-aos="fade-up">
+        <div class="container-custom hot-sales" data-aos="fade-up" style="margin-top: 2rem;">
             <div class="row">
             @if(isset($hotsale) && isset($hotsale[0]))
                 <div class="col-12 col-lg-4 promo-content-center">
@@ -530,7 +530,9 @@
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
-  <div id="preloader"></div>
+  <div id="preloader">
+    <img src="img/spinning.gif" class="loader-spin" alt="Loader">
+  </div>
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

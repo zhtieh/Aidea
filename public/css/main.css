@@ -591,7 +591,15 @@ h6 {
   height: 100vh;
 }
 
-#preloader:before,
+.loader-spin
+{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* #preloader:before,
 #preloader:after {
   content: "";
   position: absolute;
@@ -602,7 +610,7 @@ h6 {
 
 #preloader:after {
   animation-delay: -0.5s;
-}
+} */
 
 @keyframes animate-preloader {
   0% {
@@ -1507,14 +1515,14 @@ section,
 {
     text-align: center;
     color: #fff;
-    font-size: 4.75rem;
+    font-size: 72px;
 }
 
 .find-content
 {
     text-align: center;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 24px;
 }
 
 .btn.find-button
@@ -1532,6 +1540,19 @@ section,
     padding: 10px 30px;
     font-size: 18px;
   }
+}
+
+@media(max-width: 576px)
+{
+  .find-title
+  {
+      font-size: 52px;
+  }
+  
+  .find-content
+  {
+      font-size: 18px;
+  }  
 }
 /*--------------------------------------------------------------
 # More Features Section
@@ -1917,7 +1938,7 @@ section,
 
 .promo-word
 {
-    font-size: 6.875rem;
+    font-size: 9.875rem;
     font-weight: bold;
     background: linear-gradient(to right, #ff8a00, #da1b60);
     -webkit-background-clip: text;
@@ -1928,7 +1949,7 @@ section,
 
 .promo-word-2
 {
-    font-size: 6.875rem;
+    font-size: 9.875rem;
     font-weight: bold;
     background: linear-gradient(to left, #ff8a00, #da1b60);
     -webkit-background-clip: text;
@@ -1938,16 +1959,16 @@ section,
 }
 
 
-@media(max-width: 1500px)
+@media(max-width: 1600px)
 {
     .promo-word
     {
-        font-size: 6rem;
+        font-size: 8.8rem;
     }
 
     .promo-word-2
     {
-        font-size: 6rem;
+        font-size: 8.8rem;
     }
 }
 
@@ -1957,18 +1978,15 @@ section,
     {
         height: 450px;
     }
-}
 
-@media(max-width: 1300px)
-{
     .promo-word
     {
-        font-size: 5.55rem;
+        font-size: 7.55rem;
     }
 
     .promo-word-2
     {
-        font-size: 5.55rem;
+        font-size: 7.55rem;
     }
 }
 
@@ -1981,12 +1999,12 @@ section,
 
     .promo-word
     {
-        font-size: 5rem;
+        font-size: 6.5rem;
     }
 
     .promo-word-2
     {
-        font-size: 5rem;
+        font-size: 6.5rem;
     }
 
     .benf
@@ -1999,16 +2017,16 @@ section,
 {
   .promo-word
   {
-      font-size: 4.25rem;
+      font-size: 6.2rem;
   }
 
   .promo-word-2
   {
-      font-size: 4.25rem;
+      font-size: 6.2rem;
   }
 }
 
-@media(max-width: 992px)
+@media(max-width: 991.9px)
 {
     .product-carousel.owl-carousel .owl-item img
     {
