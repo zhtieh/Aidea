@@ -123,13 +123,13 @@
 					<tr>
 						<th scope="col">Price(RM):</th>
 						<td>
-							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00">
+							<input type="number" class="form-control" name="Price" id="ModalProductPrice" value="" data-type="currency" placeholder="0.00"  step="0.01">
 						</td>
 					</tr>
           <tr>
             <th scope="col">Promotion Price(RM):</th>
             <td>
-              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00">
+              <input type="number" class="form-control" name="PromoPrice" id="ModalPromoPrice" value="" data-type="currency" placeholder="0.00" step="0.01">
             </td>
           </tr>
 					<tr>
@@ -142,10 +142,7 @@
 	                    <th scope="col">Cover Photo:</th>
 	                    <td>
 	                    	<input type="hidden" name="CoverAction" id="CoverAction" value="No">
-	                      <img src="https://images.vanguardbuffle.com/Aidea/Product/add.png" style="width:200px; height: 200px;" class="mb-2" id="CoverPhotoImg">
-	                      <button type="button" class="btn btn-danger" style="visibility:hidden" id="CoverPhotoImgRemove" onclick="removeImageInput('CoverPhotoImgInput','CoverPhotoImg')">
-	                          <i class="fa fa-xmark"></i>
-	                      </button>
+	                      <img src="https://images.vanguardbuffle.com/Aidea/Product/add.png" style="width:200px; height: 200px; display: none;" class="mb-2" id="CoverPhotoImg">
 						  <input class="form-control" type="file" id="CoverPhotoImgInput" accept="image/png, image/jpeg" onchange="readProductURL(this,'CoverPhotoImg');" name="UploadCoverImage" data-id="CoverPhotoImg">
 	                    </td>
 	                </tr>
@@ -253,12 +250,14 @@
 	        $('#'+target).attr('src', e.target.result);
 	      };
 	      reader.readAsDataURL(input.files[0]);
+        $('#'+target).css('display', 'block');
 
-      		$('#'+target+'Remove').css('visibility','visible');
+      		// $('#'+target+'Remove').css('visibility','visible');
 	    }
 	    else{
-	    	$('#'+target).attr('src', 'https://images.vanguardbuffle.com/Aidea/Product/add.png');
-  			$('#'+target+'Remove').css('visibility','hidden');
+	    	$('#'+target).css('display', 'none');
+        $('#'+target).attr('src', '');
+  			// $('#'+target+'Remove').css('visibility','hidden');
 	    }
 	  }
 
@@ -290,6 +289,21 @@
             LoadProductDetails(data.product);
           }
         });
+        // fetch(window.location.origin + "/GetProductDetails/" + productGUID)
+        // .then(response => response.blob())
+        // .then(blob => {
+        //   const url = window.URL.createObjectURL(blob);
+        //   const a = document.createElement('a');
+        //   a.href = url;
+        //   a.download = 'downloaded_file.zip';
+        //   document.body.appendChild(a);
+        //   a.click();
+        //   a.remove();
+        //   window.URL.revokeObjectURL(url);
+        // })
+        // .catch(error => {
+        //   // Handle errors
+        // });
       }
 
       function LoadProductDetails(details)
@@ -304,6 +318,7 @@
       	$('#ModalProductQuantity').val(details.Quantity);
       	if(details.CoverPhotoURL != '')
       	{
+          $('#CoverPhotoImg').css('display','block');
       		$('#CoverPhotoImg').attr('src',details.CoverPhotoURL);
       	}
       	
@@ -406,12 +421,15 @@
       	$('#ModalProductDescription').val('');
       	$('#ModalProductPrice').val('');
       	$('#ModalProductQuantity').val('');
-      	$('#CoverPhotoImg').attr('src','https://images.vanguardbuffle.com/Aidea/Product/add.png');
+      	$('#CoverPhotoImg').attr('src','');
+        $('#CoverPhotoImg').css('display','none');
       	previewContainer.innerHTML = '';
       	$('#ProductFileLink').css('display','none');
       	$('#image-upload').val('');
       	$('#ProductFile').val('');
+        $('#ModalPromoPrice').val('');
       	$('#CoverPhotoImgInput').val('');
+        previewFileContainer.innerHTML = '';
       }
 
       $("#productForm").submit(function(e){

@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 use File;
 
+use Mail;
+
+use ZipArchive;
+
+use App\Mail\WelcomeMail;
+
 /**
  * 
  */
@@ -82,6 +88,34 @@ class ProductController extends Controller
                                 FROM u859417454_Aidea.Product p
                                 WHERE p.ProductGUID = ?
                                 LIMIT 1;",[$productGUID]);
+
+            //$order = DB::select("SELECT o.name FROM u859417454_Aidea.Order o WHERE OrderID = 9");
+
+            //$this->sendMail();
+
+            // $folderPath = '/Product/File/'.$products[0]->ProductGUID;
+            // $files = Storage::disk('hostinger')->files($folderPath); 
+
+            // $tempDir = sys_get_temp_dir() . '/' . uniqid();
+            // mkdir($tempDir);
+
+            // $zipFileName = 'ftp_folder.zip';
+            // $zipFilePath = $tempDir . '/' . $zipFileName;
+
+            // $zip = new ZipArchive();
+            // $zip->open($zipFilePath, ZipArchive::CREATE);
+
+            // foreach ($files as $file) {
+            //     $fileContent = Storage::disk('hostinger')->get($file);
+            //     $zip->addFromString(basename($file), $fileContent);
+            // }
+
+            // $zip->close();
+
+            // return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
+
+
+            // Mail::to("zhtieh13@gmail.com")->send(new WelcomeMail($products[0],$order[0]->name));
 
             return json_encode(['status' => 1, 'product' => $products[0]]);
         }
@@ -499,4 +533,19 @@ class ProductController extends Controller
             return json_encode(['status' => 0]);
         }
     }
+
+    // public function sendMail()
+    // {
+    //     $name = "Tieh Zu Han";
+    //     $email = "zhtieh13@gmail.com";
+ 
+    //     $body = [
+    //         'name'=>$name,
+    //         'url_a'=>'https://www.bacancytechnology.com/',
+    //        'url_b'=>'https://www.bacancytechnology.com/tutorials/laravel',
+    //     ];
+ 
+    //     Mail::to($email)->send(new WelcomeMail($body));
+    //     return back()->with('status','Mail sent successfully');;
+    // }
 }

@@ -137,6 +137,14 @@
       .slider.round:before {
         border-radius: 50%;
       }
+
+       .preview-fileContainer {
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+      .file-name {
+        margin-bottom: 5px;
+      }
   </style>
 </head>
 
@@ -209,6 +217,18 @@
           <li>
             <a href="{{ route('products') }}">
               <i class="bi bi-circle"></i><span>Active Products</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
+          <i class="fa-solid fa-money-bill"></i><span>Orders</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="orders-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('orders') }}">
+              <i class="bi bi-circle"></i><span>Orders</span>
             </a>
           </li>
         </ul>
