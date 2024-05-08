@@ -365,7 +365,7 @@ class ProductController extends Controller
 
                 if(Storage::disk('hostinger')->exists("Product/File/".$request['ProductGUID']))
                 {
-                   Storage::disk('hostinger')->delete("Product/File/".$request['ProductGUID']);
+                   Storage::disk('hostinger')->deleteDirectory("Product/File/".$request['ProductGUID']);
                 }
 
                 if($request->hasFile('ProductFile'))
