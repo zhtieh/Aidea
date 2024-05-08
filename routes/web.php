@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Account\LoginRegisterController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SenangPayController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DownloadController;
 
 
 /*
@@ -39,6 +41,12 @@ Route::controller(ProductController::class)->group(function() {
     Route::get('/admin/products', 'index')->name('products');
 });
 
+Route::controller(OrderController::class)->group(function() {
+    Route::get('/admin/orders', 'index')->name('orders');
+});
+
+Route::get('DownloadFile/{orderGUID}', [DownloadController::class, 'DownloadFile'])->name('DownloadFile');
+
 //Ajax
 //Banner
 Route::post('update-banner-details', [BannerController::class, 'UpdateBanner'])->name('UpdateBanner');
@@ -55,3 +63,6 @@ Route::get('get-active-product', [ProductController::class, 'GetActiveProduct'])
 Route::get('GetProductForPayment/{productGUID}', [SenangPayController::class, 'GetProductForPayment'])->name('GetProductForPayment'); 
 Route::post('CreatePayment', [SenangPayController::class, 'CreatePayment'])->name('CreatePayment'); 
 Route::get('ReturnCall', [SenangPayController::class, 'ReturnCall'])->name('ReturnCall'); 
+
+//Download
+Route::get('DownloadOrderProductFiles/{orderGUID}', [DownloadController::class, 'DownloadOrderProductFiles'])->name('DownloadOrderProductFiles'); 
