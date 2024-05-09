@@ -1443,6 +1443,14 @@ section,
     letter-spacing: 0.7px;
 }
 
+@media(max-width: 1600px)
+{
+  .extra-subcontent
+  {
+    font-size: 1.25rem;
+  }
+}
+
 @media(max-width: 576px)
 {
   .extra-content
