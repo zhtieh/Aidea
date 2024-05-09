@@ -81,8 +81,8 @@ h6 {
 
 @font-face
 {
-    font-family: 'RussoOne Regular';
-    src: url('../fonts/RussoOne-Regular.ttf');
+    font-family: 'Epilogue';
+    src: url('../fonts/Epilogue-VariableFont_wght.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -1398,10 +1398,22 @@ section,
 .fix-background
 {
     position: relative;
-    background-image: url(../img/samuel-background-darken1.png);
+    background-image: url(../img/MY_DESIGN_PHILOSOPHY.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size:cover;
+}
+
+.fix-background::before
+{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 .extra-container
@@ -1411,8 +1423,8 @@ section,
 
 .extra-content
 {
-    font-size: 4.5rem;
-    font-family: 'RussoOne Regular';
+    font-size: 3.5rem;
+    font-family: 'Epilogue';
     text-align:center;
     position: relative;
     z-index: 2;
@@ -1421,13 +1433,27 @@ section,
 
 .extra-subcontent
 {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 300;
     text-align: center;
     font-family: 'Inter', sans-serif;
     color: white;
     z-index: 2;
     position: relative;
+    letter-spacing: 0.7px;
+}
+
+@media(max-width: 576px)
+{
+  .extra-content
+  {
+    font-size: 2.5rem;
+  }
+
+  .extra-subcontent
+  {
+    font-size: 1.2rem;
+  }
 }
 
 /*--------------------------------------------------------------
