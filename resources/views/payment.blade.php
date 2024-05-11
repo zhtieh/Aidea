@@ -124,6 +124,20 @@ $currentURL = url()->current();
             border: 0;
         }
 
+        .product-img-box
+        {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .product-img
+        {
+            max-width: 330px;
+            border: 1px solid #000;
+            padding: 15px;
+
+        }
+
         @media(min-width: 576px)
         {
             .modal-dialog
@@ -194,6 +208,11 @@ $currentURL = url()->current();
     </div>
 </div>
 <div class="container payment-container">
+    <div class="row">
+        <div class="product-img-box">
+            <img src="" class="product-img" id="product-pix" alt="Product img">
+        </div>
+    </div>
     <form action="" method="POST" id="payment-form" class="pay-form">
         <div class="row">    
             <div class="col-12 col-md-6">
@@ -484,6 +503,8 @@ $currentURL = url()->current();
           },
           success: function(response){
             var data = JSON.parse(response);
+
+            console.log(data.product[0])
             if(data.product.length > 0)
             {
                 LoadProductDetails(data.product[0]);
@@ -507,6 +528,7 @@ $currentURL = url()->current();
         $('#ProductDetails').html(product.Name);
         $('#Total').html("RM" + product.Price);
         $('#Subtotal').html("RM" + product.Price);
+        $('#product-pix').attr('src', product.CoverPhotoURL);
     }
 
     $('#payment-form').on('submit', function(e)

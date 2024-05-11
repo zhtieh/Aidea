@@ -41,7 +41,7 @@ class SenangPayController extends Controller
     {
         try
         {
-            $products = DB::select("SELECT p.Name, CASE WHEN p.PromotionPrice IS NOT NULL AND p.PromotionPrice > 0.00  AND p.PromotionPrice <= p.Price THEN
+            $products = DB::select("SELECT p.Name, p.CoverPhotoURL, CASE WHEN p.PromotionPrice IS NOT NULL AND p.PromotionPrice > 0.00  AND p.PromotionPrice <= p.Price THEN
                                         p.PromotionPrice
                                         ELSE 
                                          p.Price 
