@@ -124,7 +124,7 @@
                                 @endif
                                 <div class="d-flex">
                                     <button class="product-desc-btn btn btn-read-more" data-bs-toggle="modal" data-bs-target="#product{{ $index + 1 }}">INFORMATION <i class="fa fa-info-circle"></i></button>
-                                    <button class="purchase-btn btn btn-buy"><a href="/payment/{{ $product->ProductGUID }}">BUY NOW <i class="fa fa-shopping-cart"></i></a></button>
+                                    <a href="/payment/{{ $product->ProductGUID }}"><button class="purchase-btn btn btn-buy">BUY NOW <i class="fa fa-shopping-cart"></i></button></a>
                                 </div>
                             </div>
                         </div> 

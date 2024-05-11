@@ -900,6 +900,12 @@ section,
   background-position: center;
   background-size: cover;
   position: relative;
+  visibility: hidden;
+}
+
+.swiper-slide.swiper-slide-visible.swiper-slide-active
+{
+  visibility: visible;
 }
 
 .swiper-slide img {
@@ -954,6 +960,8 @@ section,
 
 .banner-btn-row
 {
+  /* position: absolute;
+  top: 60%; */
   display: flex;
   width: 100%;
 }
