@@ -305,8 +305,8 @@
         <div class="fix-background">
             <div class="container" style="padding: 0 40px;">
                 <div class="extra-container">
-                    <h1 class="extra-content">MY DESIGN PHILOSOPHY</h1>
-                    <h2 class="extra-subcontent">“Interior design is about people’s space. It evolves time to time, moving and dynamic. It is one of the creative art branches created by an interior designer who love and enjoy in designing and to ensure and to fulfil people needs, tastes and satisfaction. People needs, tastes and satisfaction are the core in designing in addition to the knowledge in design and history of art. My design favorite concept is minimalist with elegant and modern contemporary. I do love a few architects and designer such as, Frank Lloyd Wright, Philippe Starck, Le Corbusier, their designs are timeless and still being used worldwide, and the 21st century architect, Zaha Hadid. My overall objectives are every space needs to be warm, inviting, luxurious and comfortable, and reflect the heart and soul of the client.” <br><br> IDr. AzamHadi</h2>
+                    <h1 class="extra-content" data-aos="fade-up">MY DESIGN PHILOSOPHY</h1>
+                    <h2 class="extra-subcontent" data-aos="fade-up" data-aos-delay="300">“Interior design is about people’s space. It evolves time to time, moving and dynamic. It is one of the creative art branches created by an interior designer who love and enjoy in designing and to ensure and to fulfil people needs, tastes and satisfaction. People needs, tastes and satisfaction are the core in designing in addition to the knowledge in design and history of art. My design favorite concept is minimalist with elegant and modern contemporary. I do love a few architects and designer such as, Frank Lloyd Wright, Philippe Starck, Le Corbusier, their designs are timeless and still being used worldwide, and the 21st century architect, Zaha Hadid. My overall objectives are every space needs to be warm, inviting, luxurious and comfortable, and reflect the heart and soul of the client.” <br><br> IDr. AzamHadi</h2>
                 </div>
             </div>
         </div>
@@ -383,7 +383,7 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section" style="background-color: #cbae8e;">
         <div class="container">
-            <h1 class="review-title">Client Review</h1>
+            <h1 class="review-title" style="color: #775841;">Client Review</h1>
         </div>
 
         <div class="container" data-aos="fade-up">

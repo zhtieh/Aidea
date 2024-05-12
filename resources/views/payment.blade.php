@@ -44,11 +44,12 @@ $currentURL = url()->current();
 
         .footer-license
         {
-            /* flex-grow: 1; */
             text-align: center;
             position: relative;
             bottom: 0;
-            margin-bottom: 1rem;
+            background-color: #cbae8e;
+            color: #fff;
+            padding: 1rem;
         }
 
         .header-row
@@ -86,6 +87,7 @@ $currentURL = url()->current();
             border: 1px solid #000;
             padding: 0 15px;
             height: 100%;
+            background-color: #f9f9f9;
         }
 
         .form-check
