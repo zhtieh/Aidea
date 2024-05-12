@@ -28,7 +28,7 @@
     $(document).ready(function(){
         var param = (window.location.href).split('/');
 
-    	fetch("https://aidea.vanguardbuffle.com/DownloadOrderProductFiles/" + param.slice(-1))
+    	fetch(window.location.origin + "/DownloadOrderProductFiles/" + param.slice(-1))
         .then(response => response.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(blob);

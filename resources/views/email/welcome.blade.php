@@ -47,7 +47,7 @@
                 <li>Transaction ID: {{ $order->transaction_id }}</li>
                 <li>Product: {{ $order->detail }}</li>
                 <li>Price: RM{{ $order->amount }}</li>
-                <li>Download Link: https://aidea.vanguardbuffle.com/DownloadFile/{{ $order->OrderGUID }}</li>
+                <li id="downloadLink">Download Link: https://aidea-group.com/DownloadFile/{{ $order->OrderGUID }}</li>
             </ul>
         </div>
         <p style="margin-top: 20px;">We hope you enjoy your purchase! If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
