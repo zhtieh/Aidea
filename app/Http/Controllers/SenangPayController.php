@@ -131,11 +131,11 @@ class SenangPayController extends Controller
 				{
 					DB::insert("UPDATE u859417454_Aidea.Order SET status_id = 1, msg = 'Payment_was_successful', Status = 'S', transaction_id = ? WHERE OrderGUID = ?", [$request["transaction_id"],$request["order_id"]]);
 
-					$orders = DB::select("SELECT o.OrderGUID, o.detail, o.amount, o.name, o.transaction_id 
+					$orders = DB::select("SELECT o.OrderGUID, o.detail, o.amount, o.name, o.email, o.transaction_id 
 											FROM u859417454_Aidea.Order o
 											WHERE o.OrderGUID = ?;", [$request["order_id"]]);
 
-					Mail::to("zhtieh13@gmail.com")->send(new WelcomeMail($orders[0]));
+					Mail::to($orders[0]->email)->send(new WelcomeMail($orders[0]));
 
 					return view('paymentresult')->with('result','S');
 				}
