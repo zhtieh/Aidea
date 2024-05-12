@@ -80,12 +80,13 @@ $currentURL = url()->current();
             display: flex;
             flex-direction: column;
             justify-content: center;
+            margin-bottom: 1.5rem;
         }
 
         .order-detail-container
         {
-            border: 1px solid #000;
-            padding: 0 15px;
+            /* border: 1px solid #000; */
+            padding: 15px;
             height: 100%;
             background-color: #f9f9f9;
         }
