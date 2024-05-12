@@ -54,7 +54,7 @@ $currentURL = url()->current();
 
         .header-row
         {
-            justify-content: space-between; 
+            /* justify-content: space-between;  */
             align-items: center;
             padding: 0 15px;
         }
@@ -204,9 +204,9 @@ $currentURL = url()->current();
 
 <body>
 <div class="container">
-    <div class="row header-row">
+    <div class="header-row d-flex">
         <img src="{{ asset('img/AIDEA_DESIGN_SOLUTIONS__1__logo.png') }}" class="logo-img"alt="Aidea Group Logo">
-        <h1 class="payment-pg-title" style="padding-left: 0;">Payment Detail</h1>
+        <h1 class="payment-pg-title" style="padding-left: 0; margin: 0 auto;">Order Summary</h1>
     </div>
 </div>
 <div class="container payment-container">
