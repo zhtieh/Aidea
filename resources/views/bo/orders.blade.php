@@ -1,6 +1,12 @@
 @extends('bo.layouts')
 
 @section('content')
+<style>
+  .datatable-container
+  {
+    overflow-x: scroll;
+  }
+</style>
 	<div class="pagetitle">
       <h1>Orders</h1>
       <nav>
