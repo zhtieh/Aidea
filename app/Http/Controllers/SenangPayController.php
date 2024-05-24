@@ -77,7 +77,7 @@ class SenangPayController extends Controller
 			}
 			else
 			{
-				$secretKey = '6670-927';
+				$secretKey = '41440-511';
 
 				$OrderGUID = $this->GUIDv4();
 
@@ -95,9 +95,9 @@ class SenangPayController extends Controller
 				$signature = hash_hmac('sha256', $secretKey.str_replace(" ", "_", $products[0]->Name).$products[0]->Price.$OrderGUID, $secretKey);
 
 
-				DB::insert("INSERT INTO u859417454_Aidea.Order (OrderGUID, detail, amount, name, email, phone, hash, ProductGUID) VALUES 
-					(?,?,?,?,?,?,?,?)",[$OrderGUID,str_replace(" ", "_", $products[0]->Name),$products[0]->Price,$request['name'],$request['email'],
-					$request['phone'],$signature,$request['ProductGUID']]);
+				DB::insert("INSERT INTO u859417454_Aidea.Order (OrderGUID, detail, amount, name, email, phone, hash, ProductGUID, Created, Modified) VALUES 
+					(?,?,?,?,?,?,?,?,?,?)",[$OrderGUID,str_replace(" ", "_", $products[0]->Name),$products[0]->Price,$request['name'],$request['email'],
+					$request['phone'],$signature,$request['ProductGUID'],date('Y-m-d H:i:s'),date('Y-m-d H:i:s')]);
 
 				return json_encode(['status' => 1, 'data' => $data, 'signature' => $signature], 200);
 			}
@@ -121,7 +121,7 @@ class SenangPayController extends Controller
 
 			Log::debug($exist);
 
-			$secretKey = '6670-927';
+			$secretKey = '41440-511';
 
 			$signature = hash_hmac('sha256', $secretKey.$request["status_id"].$request["order_id"].$request["transaction_id"].$request["msg"], $secretKey);
 
