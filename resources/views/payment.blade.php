@@ -563,7 +563,7 @@ $currentURL = url()->current();
     function ProceedPayment(res)
     {
          var form = $('<form>', {
-            'action': 'https://sandbox.senangpay.my/payment/555171357717256',
+            'action': 'https://app.senangpay.my/payment/294171328165594',
             'method': 'GET'
         });
 
