@@ -1,3 +1,7 @@
+<?php
+$currentURL = url()->current();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,11 +9,27 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>AIDEA DESIGN SOLUTION</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+
+  <meta name="description" content="Aidea Group Solution">
+  <meta name="website" content="<?php echo $currentURL; ?>">
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
+
+    <!-- meta global -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo $currentURL; ?>">
+    <meta property="og:title" content="Aidea Group Solution">
+    <meta property="og:description" content="Top Interior Designer in Selangor— specializing in interior design and ID construction/renovation works for residential properties, offices, hotels, resorts, retail, corporate, and government offices. AGSB offers interior design solutions, project management services, and ID renovation/construction to meet client needs.">
+    <meta property="og:image" content="{{ asset('/img/aidea-metacover.jpg') }}">
+    <meta property="og:image:url" content="{{ asset('/img/aidea-metacover.jpg') }}">
+
+    <!-- meta twitter -->
+    <meta name="twitter:card" content="Summary">
+    <meta name="twitter:site" content="<?php echo $currentURL; ?>">
+    <meta name="twitter:title" content="Aidea Group Solution">
+    <meta name="twitter:description" content="Top Interior Designer in Selangor— specializing in interior design and ID construction/renovation works for residential properties, offices, hotels, resorts, retail, corporate, and government offices. AGSB offers interior design solutions, project management services, and ID renovation/construction to meet client needs.">
+    <meta name="twitter:image" content="{{ asset('/img/aidea-metacover.jpg') }}">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">

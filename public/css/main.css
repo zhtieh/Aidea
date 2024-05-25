@@ -2177,30 +2177,35 @@ section,
 
 @media(max-width: 575.8px)
 {
-    .product-carousel.owl-carousel .item
-    {
-        background-color: transparent;
-    }
+  .product-carousel.owl-carousel .item
+  {
+      background-color: transparent;
+  }
 
-    .hot-sales .product-frame
-    {
-        max-width: 385px;
-    }
+  .product-price
+  {
+    font-size: 1.5rem;
+  }
 
-    .promo-word, .promo-word-2
-    {
-        font-size: 40px;
-    }
+  .hot-sales .product-frame
+  {
+      max-width: 385px;
+  }
 
-    .space-pro
-    {
-        margin-left: 1.25rem;
-    }
+  .promo-word, .promo-word-2
+  {
+      font-size: 40px;
+  }
 
-    .prev,
-    .next {
-        top: 55%;
-    }
+  .space-pro
+  {
+      margin-left: 1.25rem;
+  }
+
+  .prev,
+  .next {
+      top: 55%;
+  }
 }
 
 @media(max-width: 420px)
@@ -2213,6 +2218,14 @@ section,
   .space-pro
   {
       margin-left: 1rem;
+  }
+}
+
+@media(max-width: 350px)
+{
+  .default-price
+  {
+    font-size: 1.1rem;
   }
 }
 
